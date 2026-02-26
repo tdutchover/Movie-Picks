@@ -1,4 +1,4 @@
-﻿namespace TravisMovieRatings.Controllers;
+﻿namespace MoviePicks.Web.Controllers;
 
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;

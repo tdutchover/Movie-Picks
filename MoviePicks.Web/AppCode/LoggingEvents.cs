@@ -1,4 +1,4 @@
-﻿namespace TravisMovieRatings.AppCode
+﻿namespace MoviePicks.Web.AppCode
 {
     /// <summary>
     /// Provides a centralized location for defining logging event IDs used throughout the application.

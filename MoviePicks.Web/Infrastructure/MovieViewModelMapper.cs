@@ -1,4 +1,4 @@
-﻿namespace TravisMovieRatings.Infrastructure;
+﻿namespace MoviePicks.Web.Infrastructure;
 
 using MR.Models.DTOs;
 using TravisMovieRatings.Models;

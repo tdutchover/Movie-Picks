@@ -1,5 +1,6 @@
 ﻿namespace TravisMovieRatings.Services.BackendApiClients;
 
+using MoviePicks.Web.Models;
 using MR.Models.DTOs;
 using MR.Models.Enums;
 using TravisMovieRatings.Models;

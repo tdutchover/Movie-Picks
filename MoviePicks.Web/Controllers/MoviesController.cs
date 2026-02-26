@@ -1,10 +1,11 @@
 ﻿namespace TravisMovieRatings.Controllers;
 
 using Microsoft.AspNetCore.Mvc;
+using MoviePicks.Web.AppCode;
+using MoviePicks.Web.Infrastructure;
+using MoviePicks.Web.Models;
 using MR.Models.DTOs;
 using MR.Models.Enums;
-using TravisMovieRatings.AppCode;
-using TravisMovieRatings.Infrastructure;
 using TravisMovieRatings.Models;
 using TravisMovieRatings.Services;
 using TravisMovieRatings.Services.BackendApiClients;

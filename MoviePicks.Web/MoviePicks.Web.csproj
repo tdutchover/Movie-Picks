@@ -13,6 +13,7 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MR.Models\MR.Models.csproj" />
+    <ProjectReference Include="..\MoviePicks.Contracts\MoviePicks.Contracts.csproj" />
+    <ProjectReference Include="..\MR.Models\MoviePicks.Contracts.csproj" />
   </ItemGroup>
 </Project>
