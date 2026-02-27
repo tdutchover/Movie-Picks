@@ -29,6 +29,5 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MoviePicks.Contracts\MoviePicks.Contracts.csproj" />
-    <ProjectReference Include="..\MR.Models\MoviePicks.Contracts.csproj" />
   </ItemGroup>
 </Project>
