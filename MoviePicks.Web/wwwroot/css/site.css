@@ -2,20 +2,16 @@ html {
   font-size: 14px;
 }
 
-#brand-all {
-    color: crimson;
+#app-brand-container {
+    color: chartreuse;
+    display: inline-flex;
+    align-items: center;
 }
 
-#ten-brand {
-    margin-right: -3px;
-    padding-right: -3px;
-}
-
-#brand-star {
-    /* Move up to center on the 10 */
-    padding-left: -3px;
-    margin-left: -3px;
-    padding-bottom: 5px;
+#app-brand-text {
+    font-size: 1.25rem; /* Ensures text is prominent */
+    font-weight: bold;
+    margin-right: 6px; /* Space between text and icon */
 }
 
 @media (min-width: 768px) {
