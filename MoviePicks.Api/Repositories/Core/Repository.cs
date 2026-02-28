@@ -1,9 +1,9 @@
-﻿namespace MovieRatingsBackendWebApi.Repositories.Core;
+﻿namespace MoviePicks.Api.Repositories.Core;
 
 using Microsoft.EntityFrameworkCore;
-using MovieRatingsBackendWebApi.Infrastructure.Exceptions;
-using MovieRatingsBackendWebApi.Models;
-using MR.Models;
+using MoviePicks.Api.Infrastructure.Exceptions;
+using MoviePicks.Api.Models;
+using MoviePicks.Contracts;
 using System.Linq.Expressions;
 
 public class Repository<T> : IRepository<T>

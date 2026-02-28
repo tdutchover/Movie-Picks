@@ -1,9 +1,8 @@
-﻿namespace TravisMovieRatings.Services.BackendApiClients;
+﻿namespace MoviePicks.Web.Services.BackendApiClients;
 
+using MoviePicks.Contracts.DTOs;
+using MoviePicks.Contracts.Enums;
 using MoviePicks.Web.Models;
-using MR.Models.DTOs;
-using MR.Models.Enums;
-using TravisMovieRatings.Models;
 
 public interface IBackendMovieApiClient
 {

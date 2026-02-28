@@ -8,7 +8,7 @@
     }
   },
   "profiles": {
-    "TravisMovieRatings": {
+    "MoviePicks.Web": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

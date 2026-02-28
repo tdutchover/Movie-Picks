@@ -1,6 +1,4 @@
-﻿namespace MovieRatingsBackendWebApi.Models;
-
-using MR.Models;
+﻿namespace MoviePicks.Api.Models;
 
 /// <summary>
 /// This is an intersection table between Movie and Genre.

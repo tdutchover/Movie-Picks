@@ -1,7 +1,7 @@
+using MoviePicks.Web;
 using Serilog;
 using Serilog.Events;
 using Serilog.Formatting.Json;
-using TravisMovieRatings.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 

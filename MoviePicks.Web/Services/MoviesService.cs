@@ -1,8 +1,7 @@
-﻿namespace TravisMovieRatings.Services;
+﻿namespace MoviePicks.Web.Services;
 
 using MoviePicks.Web.Models;
-using TravisMovieRatings.Models;
-using TravisMovieRatings.Services.BackendApiClients;
+using MoviePicks.Web.Services.BackendApiClients;
 
 public class MoviesService : IMoviesService
 {

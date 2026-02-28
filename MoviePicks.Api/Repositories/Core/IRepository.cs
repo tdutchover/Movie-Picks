@@ -1,4 +1,4 @@
-﻿namespace MovieRatingsBackendWebApi.Repositories.Core;
+﻿namespace MoviePicks.Api.Repositories.Core;
 
 using System.Linq.Expressions;
 

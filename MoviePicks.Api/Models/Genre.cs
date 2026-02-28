@@ -1,6 +1,6 @@
-﻿namespace MovieRatingsBackendWebApi.Models;
+﻿namespace MoviePicks.Api.Models;
 
-using MR.Models;
+using MoviePicks.Contracts;
 
 public class Genre : GenreCore, IIdentifiable
 {

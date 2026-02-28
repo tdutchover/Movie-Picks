@@ -1,4 +1,4 @@
-using MovieRatingsBackendWebApi.Extensions;
+using MoviePicks.Api;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 

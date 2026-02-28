@@ -3,11 +3,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using MovieRatingsBackendWebApi.Models;
+using MoviePicks.Api.Models;
+
 
 #nullable disable
 
-namespace MovieRatingsBackendWebApi.Migrations
+namespace MoviePicks.Api.Migrations
 {
     [DbContext(typeof(DbMovieContext))]
     partial class DbMovieContextModelSnapshot : ModelSnapshot
@@ -21,7 +22,7 @@ namespace MovieRatingsBackendWebApi.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("MovieRatingsBackendWebApi.Models.Genre", b =>
+            modelBuilder.Entity("MoviePicks.Api.Models.Genre", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -120,7 +121,7 @@ namespace MovieRatingsBackendWebApi.Migrations
                         });
                 });
 
-            modelBuilder.Entity("MovieRatingsBackendWebApi.Models.Movie", b =>
+            modelBuilder.Entity("MoviePicks.Api.Models.Movie", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -189,7 +190,7 @@ namespace MovieRatingsBackendWebApi.Migrations
                         });
                 });
 
-            modelBuilder.Entity("MovieRatingsBackendWebApi.Models.MovieGenre", b =>
+            modelBuilder.Entity("MoviePicks.Api.Models.MovieGenre", b =>
                 {
                     b.Property<int>("MovieId")
                         .HasColumnType("int");
@@ -256,15 +257,15 @@ namespace MovieRatingsBackendWebApi.Migrations
                         });
                 });
 
-            modelBuilder.Entity("MovieRatingsBackendWebApi.Models.MovieGenre", b =>
+            modelBuilder.Entity("MoviePicks.Api.Models.MovieGenre", b =>
                 {
-                    b.HasOne("MovieRatingsBackendWebApi.Models.Genre", "Genre")
+                    b.HasOne("MoviePicks.Api.Models.Genre", "Genre")
                         .WithMany("MovieGenres")
                         .HasForeignKey("GenreId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MovieRatingsBackendWebApi.Models.Movie", "Movie")
+                    b.HasOne("MoviePicks.Api.Models.Movie", "Movie")
                         .WithMany("MovieGenres")
                         .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -275,12 +276,12 @@ namespace MovieRatingsBackendWebApi.Migrations
                     b.Navigation("Movie");
                 });
 
-            modelBuilder.Entity("MovieRatingsBackendWebApi.Models.Genre", b =>
+            modelBuilder.Entity("MoviePicks.Api.Models.Genre", b =>
                 {
                     b.Navigation("MovieGenres");
                 });
 
-            modelBuilder.Entity("MovieRatingsBackendWebApi.Models.Movie", b =>
+            modelBuilder.Entity("MoviePicks.Api.Models.Movie", b =>
                 {
                     b.Navigation("MovieGenres");
                 });

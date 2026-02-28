@@ -1,7 +1,7 @@
-﻿namespace MovieRatingsBackendWebApi.Repositories.Core;
+﻿namespace MoviePicks.Api.Repositories.Core;
 
-using MovieRatingsBackendWebApi.Models;
-using MovieRatingsBackendWebApi.Repositories;
+using MoviePicks.Api.Models;
+using MoviePicks.Api.Repositories;
 
 public class UnitOfWork : IUnitOfWork
 {

@@ -1,6 +1,6 @@
-﻿namespace MR.Models;
+﻿namespace MoviePicks.Contracts;
 
-using MR.Models.Enums;
+using MoviePicks.Contracts.Enums;
 using System.Collections.Generic;
 
 public abstract class MovieFilterCriteriaBase

@@ -1,4 +1,4 @@
-﻿namespace TravisMovieRatings.Models;
+﻿namespace MoviePicks.Web.Models;
 
 /// <summary>
 /// List of results when searching for a movie by title. A search by title

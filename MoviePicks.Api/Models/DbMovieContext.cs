@@ -1,7 +1,6 @@
-﻿namespace MovieRatingsBackendWebApi.Models;
+﻿namespace MoviePicks.Api.Models;
 
 using Microsoft.EntityFrameworkCore;
-using MR.Models;
 
 public class DbMovieContext : DbContext
 {

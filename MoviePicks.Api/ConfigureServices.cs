@@ -1,13 +1,13 @@
-﻿namespace MovieRatingsBackendWebApi.Extensions;
+﻿namespace MoviePicks.Api;
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
-using MovieRatingsBackendWebApi.Models;
-using MovieRatingsBackendWebApi.Shared;
-using MovieRatingsBackendWebApi.Services.ThirdPartyApiClients;
-using MovieRatingsBackendWebApi.Services.BusinessServices;
-using MovieRatingsBackendWebApi.Repositories.Core;
-using MovieRatingsBackendWebApi.Repositories;
+using MoviePicks.Api.Repositories;
+using MoviePicks.Api.Repositories.Core;
+using MoviePicks.Api.Shared;
+using MoviePicks.Api.Services.ThirdPartyApiClients;
+using MoviePicks.Api.Services.BusinessServices;
+using MoviePicks.Api.Models;
 
 public static partial class ServiceCollectionExtensions
 {
@@ -64,12 +64,12 @@ public static partial class ServiceCollectionExtensions
         services.AddCors(options =>
         {
             options.AddPolicy(
-                name: BackendConstants.CorsPolicyName_For_TravisMovieRatings_Project,
+                name: BackendConstants.CorsPolicyName_AllowFrontend,
                 configurePolicy: corsPolicyBuilder =>
                 {
-                    const string clientOriginForTravisMovieRatingsProject = "http://localhost:5173";
+                    const string FrontendOriginUrl = "http://localhost:5173";
 
-                    corsPolicyBuilder.WithOrigins(clientOriginForTravisMovieRatingsProject)
+                    corsPolicyBuilder.WithOrigins(FrontendOriginUrl)
                           .AllowAnyHeader()
                           .WithMethods("GET");
                 });

@@ -1,7 +1,7 @@
 ﻿namespace MoviePicks.Web.Infrastructure;
 
-using MR.Models.DTOs;
-using TravisMovieRatings.Models;
+using MoviePicks.Contracts.DTOs;
+using MoviePicks.Web.Models;
 
 public static class MovieViewModelMapper
 {

@@ -1,5 +1,4 @@
-﻿namespace MovieRatingsBackendWebApi.Models;
-using MR.Models;
+﻿namespace MoviePicks.Api.Models;
 
 public class CompositeMovie
 {

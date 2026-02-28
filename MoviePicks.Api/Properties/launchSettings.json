@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "MovieRatingsBackendWebApi": {
+    "MoviePicks.Api": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

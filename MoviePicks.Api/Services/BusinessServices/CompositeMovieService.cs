@@ -1,15 +1,14 @@
-﻿namespace MovieRatingsBackendWebApi.Services.BusinessServices;
+﻿namespace MoviePicks.Api.Services.BusinessServices;
 
 using Microsoft.EntityFrameworkCore;
-using MovieRatingsBackendWebApi.Infrastructure.Exceptions;
-using MovieRatingsBackendWebApi.Infrastructure.Mappers;
-using MovieRatingsBackendWebApi.Models;
-using MovieRatingsBackendWebApi.Repositories.Core;
-using MovieRatingsBackendWebApi.Services.ThirdPartyApiClients;
-using MR.Models.DTOs;
-using MR.Models.Enums;
+using MoviePicks.Api.Infrastructure.Exceptions;
+using MoviePicks.Api.Infrastructure.Mappers;
+using MoviePicks.Api.Models;
+using MoviePicks.Api.Repositories.Core;
+using MoviePicks.Api.Services.ThirdPartyApiClients;
+using MoviePicks.Contracts.DTOs;
+using MoviePicks.Contracts.Enums;
 using System.Collections.Generic;
-using TravisMovieRatings.DataTransferObjects;
 
 public class CompositeMovieService : ICompositeMovieService
 {

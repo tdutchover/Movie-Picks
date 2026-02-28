@@ -1,4 +1,4 @@
-﻿namespace MovieRatingsBackendWebApi.Infrastructure.Exceptions;
+﻿namespace MoviePicks.Api.Infrastructure.Exceptions;
 
 public class EntityDeletionException : Exception
 {

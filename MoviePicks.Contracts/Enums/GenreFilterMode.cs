@@ -1,4 +1,4 @@
-﻿namespace MR.Models.Enums;
+﻿namespace MoviePicks.Contracts.Enums;
 
 /// <summary>
 /// Determines how genres are matched in an EF Core query filter.

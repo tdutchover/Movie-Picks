@@ -1,7 +1,7 @@
-﻿namespace MovieRatingsBackendWebApi.Repositories;
+﻿namespace MoviePicks.Api.Repositories;
 
-using MovieRatingsBackendWebApi.Models;
-using MovieRatingsBackendWebApi.Repositories.Core;
+using MoviePicks.Api.Models;
+using MoviePicks.Api.Repositories.Core;
 
 public interface IMovieRepository : IRepository<Movie>
 {

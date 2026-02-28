@@ -1,7 +1,7 @@
-﻿namespace MovieRatingsBackendWebApi.Infrastructure.Mappers;
+﻿namespace MoviePicks.Api.Infrastructure.Mappers;
 
-using MovieRatingsBackendWebApi.Models;
-using MR.Models.DTOs;
+using MoviePicks.Api.Models;
+using MoviePicks.Contracts.DTOs;
 
 public static class MovieMapper
 {

@@ -1,6 +1,6 @@
-﻿namespace MovieRatingsBackendWebApi.Infrastructure.Mappers;
+﻿namespace MoviePicks.Api.Infrastructure.Mappers;
 
-using MovieRatingsBackendWebApi.Models;
+using MoviePicks.Api.Models;
 
 public static class CompositeMovieMappingExtensions
 {

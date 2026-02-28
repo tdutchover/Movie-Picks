@@ -1,7 +1,6 @@
-﻿namespace TravisMovieRatings.Services;
+﻿namespace MoviePicks.Web.Services;
 
 using MoviePicks.Web.Models;
-using TravisMovieRatings.Models;
 
 public interface IMoviesService
 {

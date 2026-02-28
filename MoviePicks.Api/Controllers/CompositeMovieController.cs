@@ -1,12 +1,11 @@
-﻿namespace MovieRatingsBackendWebApi.Controllers;
+﻿namespace MoviePicks.Api.Controllers;
 
 using Microsoft.AspNetCore.Mvc;
-using MovieRatingsBackendWebApi.Infrastructure.Mappers;
-using MovieRatingsBackendWebApi.Models;
-using MovieRatingsBackendWebApi.Services.BusinessServices;
-using MR.Models.DTOs;
-using MR.Models.Enums;
-using TravisMovieRatings.DataTransferObjects;
+using MoviePicks.Api.Infrastructure.Mappers;
+using MoviePicks.Api.Models;
+using MoviePicks.Api.Services.BusinessServices;
+using MoviePicks.Contracts.DTOs;
+using MoviePicks.Contracts.Enums;
 
 [Route("api/[controller]/[action]")]
 [ApiController]

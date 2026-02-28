@@ -1,8 +1,8 @@
-﻿namespace TravisMovieRatings.Extensions;
+﻿namespace MoviePicks.Web;
 
-using TravisMovieRatings.Services;
-using TravisMovieRatings.Services.BackendApiClients;
-using TravisMovieRatings.Shared;
+using MoviePicks.Web.Services;
+using MoviePicks.Web.Services.BackendApiClients;
+using MoviePicks.Web.Shared;
 
 public static partial class ServiceCollectionExtensions
 {

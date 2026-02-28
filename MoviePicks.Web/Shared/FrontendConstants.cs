@@ -1,4 +1,4 @@
-﻿namespace TravisMovieRatings.Shared;
+﻿namespace MoviePicks.Web.Shared;
 
 public static class FrontendConstants
 {

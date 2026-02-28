@@ -1,6 +1,6 @@
-﻿namespace TravisMovieRatings.Models;
+﻿namespace MoviePicks.Web.Models;
 
-using MR.Models;
+using MoviePicks.Contracts;
 
 public class Movie : MovieBase
 {

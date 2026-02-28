@@ -1,4 +1,4 @@
-﻿namespace TravisMovieRatings.Models;
+﻿namespace MoviePicks.Web.Models;
 
 /// <summary>
 /// This represents one element of a JSON array.

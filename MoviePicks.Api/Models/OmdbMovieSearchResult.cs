@@ -1,4 +1,4 @@
-﻿namespace MovieRatingsBackendWebApi.Models;
+﻿namespace MoviePicks.Api.Models;
 
 /// <summary>
 /// List of results when searching for a movie by title. A search by title

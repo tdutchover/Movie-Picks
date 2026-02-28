@@ -1,4 +1,4 @@
-﻿namespace MR.Models;
+﻿namespace MoviePicks.Contracts;
 
 public interface IIdentifiable
 {

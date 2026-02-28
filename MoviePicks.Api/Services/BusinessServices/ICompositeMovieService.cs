@@ -1,9 +1,8 @@
-﻿namespace MovieRatingsBackendWebApi.Services.BusinessServices;
+﻿namespace MoviePicks.Api.Services.BusinessServices;
 
-using MovieRatingsBackendWebApi.Models;
-using MR.Models.DTOs;
-using MR.Models.Enums;
-using TravisMovieRatings.DataTransferObjects;
+using MoviePicks.Api.Models;
+using MoviePicks.Contracts.DTOs;
+using MoviePicks.Contracts.Enums;
 
 public interface ICompositeMovieService
 {

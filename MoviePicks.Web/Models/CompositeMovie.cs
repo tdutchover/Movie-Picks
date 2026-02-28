@@ -1,6 +1,4 @@
-﻿using TravisMovieRatings.Models;
-
-namespace MoviePicks.Web.Models;
+﻿namespace MoviePicks.Web.Models;
 
 public class CompositeMovie
 {

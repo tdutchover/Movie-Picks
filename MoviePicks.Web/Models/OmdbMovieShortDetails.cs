@@ -1,4 +1,4 @@
-﻿namespace TravisMovieRatings.Models;
+﻿namespace MoviePicks.Web.Models;
 
 /// <summary>
 /// This is the limited information for a particular movie that appears in the results when searching for a movie title pattern.

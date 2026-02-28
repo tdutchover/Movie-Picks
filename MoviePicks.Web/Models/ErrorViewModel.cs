@@ -1,4 +1,4 @@
-namespace TravisMovieRatings.Models;
+namespace MoviePicks.Web.Models;
 
 public class ErrorViewModel
 {

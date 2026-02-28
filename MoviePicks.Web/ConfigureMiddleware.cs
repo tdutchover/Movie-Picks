@@ -1,4 +1,4 @@
-﻿namespace TravisMovieRatings.Extensions;
+﻿namespace MoviePicks.Web;
 
 using Serilog;
 using System.Diagnostics;   // For .Debug class

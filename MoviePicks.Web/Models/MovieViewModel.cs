@@ -1,4 +1,4 @@
-﻿namespace TravisMovieRatings.Models;
+﻿namespace MoviePicks.Web.Models;
 
 using System.ComponentModel.DataAnnotations;
 using System.Text;

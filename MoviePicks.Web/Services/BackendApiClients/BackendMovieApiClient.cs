@@ -1,13 +1,12 @@
-﻿namespace TravisMovieRatings.Services.BackendApiClients;
+﻿namespace MoviePicks.Web.Services.BackendApiClients;
 
 using Microsoft.AspNetCore.Mvc;
+using MoviePicks.Contracts;
+using MoviePicks.Contracts.DTOs;
+using MoviePicks.Contracts.Enums;
 using MoviePicks.Web.Models;
-using MR.Models;
-using MR.Models.DTOs;
-using MR.Models.Enums;
+using MoviePicks.Web.Shared;
 using System.Text.Json;
-using TravisMovieRatings.Models;
-using TravisMovieRatings.Shared;
 
 public class BackendMovieApiClient : IBackendMovieApiClient
 {

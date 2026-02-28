@@ -1,4 +1,4 @@
-﻿namespace MovieRatingsBackendWebApi.Models;
+﻿namespace MoviePicks.Api.Models;
 
 using System.ComponentModel.DataAnnotations;
 using System.Text;

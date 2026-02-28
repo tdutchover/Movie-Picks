@@ -1,6 +1,6 @@
-﻿namespace TravisMovieRatings.DataTransferObjects;
+﻿namespace MoviePicks.Contracts.DTOs;
 
-using MR.Models;
+using MoviePicks.Contracts;
 
 public class MovieFilterDTO : MovieFilterCriteriaBase
 {

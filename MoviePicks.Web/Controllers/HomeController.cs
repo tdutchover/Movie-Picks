@@ -1,9 +1,9 @@
 ﻿namespace MoviePicks.Web.Controllers;
 
 using Microsoft.AspNetCore.Mvc;
+using MoviePicks.Web.Models;
+using MoviePicks.Web.Shared;
 using System.Diagnostics;
-using TravisMovieRatings.Models;
-using TravisMovieRatings.Shared;
 
 /// <summary>
 /// Manages the display of the splash screen on the first visit and redirects

@@ -1,4 +1,4 @@
-﻿namespace MR.Models.DTOs;
+﻿namespace MoviePicks.Contracts.DTOs;
 
 public class GenreDTO : GenreCore
 {

@@ -1,11 +1,11 @@
-﻿namespace MovieRatingsBackendWebApi.Extensions;
+﻿namespace MoviePicks.Api;
 
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using MovieRatingsBackendWebApi.Models;
 using System.Net.Http;
 using System;
+using MoviePicks.Api.Models;
 
 public static partial class WebApplicationExtensions
 {

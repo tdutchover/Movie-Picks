@@ -1,4 +1,4 @@
-﻿namespace MovieRatingsBackendWebApi.Models;
+﻿namespace MoviePicks.Api.Models;
 
 /// <summary>
 /// This represents one element of a JSON array.

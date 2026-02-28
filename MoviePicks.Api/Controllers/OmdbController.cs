@@ -1,13 +1,12 @@
-﻿namespace MovieRatingsBackendWebApi.Controllers;
+﻿namespace MoviePicks.Api.Controllers;
 
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using MovieRatingsBackendWebApi.Models;
-using MovieRatingsBackendWebApi.Services;
-using MovieRatingsBackendWebApi.Services.ThirdPartyApiClients;
-using MovieRatingsBackendWebApi.Shared;
-using MR.Models.Enums;
+using MoviePicks.Api.Models;
+using MoviePicks.Api.Services.ThirdPartyApiClients;
+using MoviePicks.Api.Shared;
+using MoviePicks.Contracts.Enums;
 
 // FindById out about swagger:  http://swagger.io
 // From OMDB on October 17, 2022
@@ -26,14 +25,14 @@ public class OmdbController : ControllerBase
         this.omdbMovieReader = omdbMovieReader;
     }
 
-    [EnableCors(BackendConstants.CorsPolicyName_For_TravisMovieRatings_Project)]
+    [EnableCors(BackendConstants.CorsPolicyName_AllowFrontend)]
     [HttpGet("movies/{titlePattern}")]
     public async Task<ActionResult<IEnumerable<OmdbMovieShortDetails>>> SearchOmdbMoviesByTitlePattern(string titlePattern)
     {
         return await this.omdbMovieReader.SearchMoviesByTitle(titlePattern);
     }
 
-    [EnableCors(BackendConstants.CorsPolicyName_For_TravisMovieRatings_Project)]
+    [EnableCors(BackendConstants.CorsPolicyName_AllowFrontend)]
     [HttpGet("movie")]
     public async Task<ActionResult<OmdbMovieDetails>> GetMovieByImdbId([FromQuery][BindRequired] string imdbId)
     {

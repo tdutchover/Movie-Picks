@@ -1,7 +1,7 @@
-﻿namespace MovieRatingsBackendWebApi.Services.ThirdPartyApiClients;
+﻿namespace MoviePicks.Api.Services.ThirdPartyApiClients;
 
-using MovieRatingsBackendWebApi.Models;
-using MR.Models.Enums;
+using MoviePicks.Api.Models;
+using MoviePicks.Contracts.Enums;
 
 /// <summary>
 /// Service to read public information about movies

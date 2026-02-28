@@ -1,6 +1,6 @@
 ﻿namespace MoviePicks.Web.Models;
 
-using MR.Models;
+using MoviePicks.Contracts;
 
 public class MovieFilterFormModel : MovieFilterCriteriaBase
 {

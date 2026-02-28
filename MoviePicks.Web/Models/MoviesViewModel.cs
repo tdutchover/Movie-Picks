@@ -1,6 +1,6 @@
-﻿namespace TravisMovieRatings.Models;
+﻿namespace MoviePicks.Web.Models;
 
-using MR.Models.DTOs;
+using MoviePicks.Contracts.DTOs;
 
 public class MoviesViewModel
 {
