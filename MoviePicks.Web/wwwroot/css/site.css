@@ -1,0 +1,86 @@
+html {
+  font-size: 14px;
+}
+
+#app-brand-container {
+    color: chartreuse;
+    display: inline-flex;
+    align-items: center;
+}
+
+#app-brand-text {
+    font-size: 1.25rem; /* Ensures text is prominent */
+    font-weight: bold;
+    margin-right: 6px; /* Space between text and icon */
+}
+
+@media (min-width: 768px) {
+    html {
+    font-size: 16px;
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+div.card {
+    border: hidden;
+}
+
+.review-card-image {
+    border:1px solid red;
+}
+
+.growth-container {
+    overflow: hidden;
+}
+
+.grow {
+    transition: all .1s ease-in-out;
+}
+
+.grow:hover {
+    transform: scale(1.1);
+}
+
+.movie-rating::after {
+    color: red;
+    content: "\2605"
+    /*content: " *";*/
+}
+
+.hide-content {
+    display: none;
+}
+
+.plot {
+    font-weight: bold;
+}
+
+footer {
+    padding-top: 15px;
+    padding-bottom: 25px;
+    padding-left: 10px;
+    height: 80px;
+    background-color: black;
+    color: white;
+}
+
+/* 
+  Set the nav-link text colors.
+  These selectors increase specificity to override the default 
+  Bootstrap nav-link text color, avoiding the need to use !important.
+*/
+.navbar-nav .nav-item .nav-link {
+    color: aquamarine;
+}
+
+.navbar-nav .nav-item .nav-link:hover {
+    color: gold;
+}

@@ -1,7 +1,7 @@
-# Movie Reviews
+# Movie Picks
 
 ## 📋 Overview
-Movie Reviews is a demo web application designed for a single user to track their personal written movie reviews and ratings, which range from 1 to 10. I created this application based on my long-standing enjoyment of keeping personal movie reviews.
+Movie Picks is a demo web application designed for a single user to track their personal written movie reviews and ratings, which range from 1 to 10. I created this application based on my long-standing enjoyment of keeping personal movie reviews.
 
 The application also allows users to add and review video games in the same way.
 
