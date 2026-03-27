@@ -10,7 +10,7 @@ using System.Text.Json;
 
 public class BackendMovieApiClient : IBackendMovieApiClient
 {
-    private const string BaseUrl = "http://localhost:5053/api/CompositeMovie/";
+    private const string BaseUrl = "https+http://moviepicks-api/api/CompositeMovie/";
     private static readonly TimeSpan FifteenSecondTimeout = TimeSpan.FromSeconds(15);
     private readonly IHttpClientFactory httpClientFactory;
     private readonly ILogger<BackendMovieApiClient> logger;

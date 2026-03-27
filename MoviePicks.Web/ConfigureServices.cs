@@ -23,7 +23,7 @@ public static partial class ServiceCollectionExtensions
 
         services.AddHttpClient(FrontendConstants.HttpClientNameTags.BackendMovieApiClientName, client =>
         {
-            client.BaseAddress = new Uri("http://localhost:5053/api/CompositeMovie/");
+            client.BaseAddress = new Uri("https+http://moviepicks-api/api/CompositeMovie/");
 #if DEBUG
             client.Timeout = Timeout.InfiniteTimeSpan; // No timeout for debugging
 #else

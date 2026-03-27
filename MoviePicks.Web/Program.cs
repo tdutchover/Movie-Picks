@@ -5,6 +5,8 @@ using Serilog.Formatting.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.AddServiceDefaults();
+
 // TODO: Configure Serilog from a file
 // builder.Host.UseSerilog((context, configuration) => configuration.ReadFrom.Configuration(context.Configuration));
 
@@ -34,7 +36,7 @@ Log.Logger.Warning("First log using serilog in Program.cs");
 //          https://andrewlock.net/using-serilog-aspnetcore-in-asp-net-core-3-logging-the-selected-endpoint-name-with-serilog/
 
 // Another Serilog article
-// Title: "Configure Serilog in ASP.NET Core – few practical tips Posted by Mario Mucalo on November 21, 2020"
+// Title: "Configure Serilog in ASP.NET Core â€“ few practical tips Posted by Mario Mucalo on November 21, 2020"
 //      https://mariomucalo.com/configure-serilog-in-asp-net-core-few-practical-tips/
 
 // Standard .NET logger configuration.
@@ -48,6 +50,8 @@ Log.Logger.Warning("First log using serilog in Program.cs");
 builder.Services.ConfigureServices();
 
 var app = builder.Build();
+
+app.MapDefaultEndpoints();
 app.ConfigureMiddleware();
 
 app.Run();
