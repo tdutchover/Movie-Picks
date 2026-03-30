@@ -1,4 +1,6 @@
-﻿namespace MoviePicks.Api.Models;
+﻿using MoviePicks.Contracts.DTOs;
+
+namespace MoviePicks.Api.Models;
 
 /// <summary>
 /// List of results when searching for a movie by title. A search by title
@@ -40,7 +42,7 @@
 /// </summary>
 public class OmdbMovieSearchResult
 {
-    public OmdbMovieShortDetails[]? search { get; set; }
+    public OmdbMovieShortDetailsDTO[]? search { get; set; }
 
     public string? totalResults { get; set; } // Example value "144"
 

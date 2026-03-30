@@ -16,7 +16,7 @@ const viewerRatingInput = document.getElementById("viewer-rating");
 const reviewHeadingInput = document.getElementById("review-heading-input");
 const reviewCommentsInput = document.getElementById("review-comments-input");
 
-const backendServiceBaseUrl = `http://localhost:5053/api/Omdb/`;
+const backendServiceBaseUrl = `/api/proxy/omdb/`;
 
 const showMovieDetailsContainer = () => {
     movieDetailsContainer.classList.remove("hide-content");

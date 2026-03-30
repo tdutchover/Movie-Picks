@@ -25,31 +25,31 @@ public class OmdbController : ControllerBase
         this.omdbMovieReader = omdbMovieReader;
     }
 
-    [EnableCors(BackendConstants.CorsPolicyName_AllowFrontend)]
-    [HttpGet("movies/{titlePattern}")]
-    public async Task<ActionResult<IEnumerable<OmdbMovieShortDetails>>> SearchOmdbMoviesByTitlePattern(string titlePattern)
-    {
-        return await this.omdbMovieReader.SearchMoviesByTitle(titlePattern);
-    }
+    //[EnableCors(BackendConstants.CorsPolicyName_AllowFrontend)]
+    //[HttpGet("movies/{titlePattern}")]
+    //public async Task<ActionResult<IEnumerable<OmdbMovieShortDetails>>> SearchOmdbMoviesByTitlePattern(string titlePattern)
+    //{
+    //    return await this.omdbMovieReader.SearchMoviesByTitle(titlePattern);
+    //}
 
-    [EnableCors(BackendConstants.CorsPolicyName_AllowFrontend)]
-    [HttpGet("movie")]
-    public async Task<ActionResult<OmdbMovieDetails>> GetMovieByImdbId([FromQuery][BindRequired] string imdbId)
-    {
-        if (imdbId == null || imdbId.Length == 0)
-        {
-            return this.BadRequest("imdbId not specified");
-        }
+    //[EnableCors(BackendConstants.CorsPolicyName_AllowFrontend)]
+    //[HttpGet("movie")]
+    //public async Task<ActionResult<OmdbMovieDetails>> GetMovieByImdbId([FromQuery][BindRequired] string imdbId)
+    //{
+    //    if (imdbId == null || imdbId.Length == 0)
+    //    {
+    //        return this.BadRequest("imdbId not specified");
+    //    }
 
-        var result = await this.omdbMovieReader.GetMovieByImdbId(imdbId, PlotSize.Short);
+    //    var result = await this.omdbMovieReader.GetMovieByImdbId(imdbId, PlotSize.Short);
 
-        if (result != null)
-        {
-            return result;
-        }
-        else
-        {
-            return this.NotFound();
-        }
-    }
+    //    if (result != null)
+    //    {
+    //        return result;
+    //    }
+    //    else
+    //    {
+    //        return this.NotFound();
+    //    }
+    //}
 }

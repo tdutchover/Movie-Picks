@@ -5,9 +5,9 @@ using MoviePicks.Web.Models;
 
 public static class MovieViewModelMapper
 {
-    public static MovieDTO ToMovieDTO(this MovieViewModel movieViewModel)
+    public static MovieDto ToMovieDTO(this MovieViewModel movieViewModel)
     {
-        return new MovieDTO()
+        return new MovieDto()
         {
             Id = movieViewModel.MovieId,
             ImdbId = movieViewModel.ImdbId,

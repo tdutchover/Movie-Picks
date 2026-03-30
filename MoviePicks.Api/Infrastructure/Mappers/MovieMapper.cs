@@ -5,7 +5,7 @@ using MoviePicks.Contracts.DTOs;
 
 public static class MovieMapper
 {
-    public static Movie ToMovie(this MovieDTO movieDTO)
+    public static Movie ToMovie(this MovieDto movieDTO)
     {
         return new Movie()
         {

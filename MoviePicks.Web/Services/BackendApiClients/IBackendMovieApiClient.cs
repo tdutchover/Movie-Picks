@@ -6,9 +6,13 @@ using MoviePicks.Web.Models;
 
 public interface IBackendMovieApiClient
 {
-    Task<List<GenreDTO>> GetAllGenres();
+    Task <List<GenreDto>> GetAllGenres();
 
     Task<List<CompositeMovie>> GetAllMovies();
+
+    Task<IEnumerable<OmdbMovieShortDetailsDTO>> SearchOmdbMoviesByTitlePatternAsync(string titlePattern);
+
+    Task<OmdbMovieDetailsDto> GetMovieByImdbIdAsync(string imdbId);
 
     Task<List<MovieViewModel>> GetAllMovieViewModels();
 
@@ -20,5 +24,5 @@ public interface IBackendMovieApiClient
 
     Task<bool> DeleteMovie(int movieId);
 
-    Task UpdateMovie(MovieDTO movie);
+    Task UpdateMovie(MovieDto movie);
 }

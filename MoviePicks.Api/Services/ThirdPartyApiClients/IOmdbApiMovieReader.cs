@@ -1,6 +1,7 @@
 ﻿namespace MoviePicks.Api.Services.ThirdPartyApiClients;
 
 using MoviePicks.Api.Models;
+using MoviePicks.Contracts.DTOs;
 using MoviePicks.Contracts.Enums;
 
 /// <summary>
@@ -8,7 +9,7 @@ using MoviePicks.Contracts.Enums;
 /// </summary>
 public interface IOmdbApiMovieReader
 {
-    Task<List<OmdbMovieShortDetails>> SearchMoviesByTitle(string title);
+    Task<List<OmdbMovieShortDetailsDTO>> SearchMoviesByTitle(string title);
 
-    Task<OmdbMovieDetails> GetMovieByImdbId(string imdbId, PlotSize plotSize);
+    Task<OmdbMovieDetailsDto> GetMovieByImdbId(string imdbId, PlotSize plotSize);
 }

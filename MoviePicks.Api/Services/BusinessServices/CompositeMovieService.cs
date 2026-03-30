@@ -21,10 +21,10 @@ public class CompositeMovieService : ICompositeMovieService
         this.omdbMovieReader = omdbMovieReader;
     }
 
-    public async Task<List<GenreDTO>> GetAllGenresAsync()
+    public async Task<List<GenreDto>> GetAllGenresAsync()
     {
         IEnumerable<Genre> genres = await this.unitOfWork.GenreRepository.GetAllAsync();
-        return genres.Select(g => new GenreDTO { Name = g.Name }).ToList();
+        return genres.Select(g => new GenreDto { Name = g.Name }).ToList();
     }
 
     public async Task AddMovieAsync(MovieViewModel movieViewModel)
@@ -159,7 +159,7 @@ public class CompositeMovieService : ICompositeMovieService
 
         foreach (Movie movie in movies)
         {
-            OmdbMovieDetails omdbMovieDetails = await this.omdbMovieReader.GetMovieByImdbId(movie.ImdbId, PlotSize.Short);
+            OmdbMovieDetailsDto omdbMovieDetails = await this.omdbMovieReader.GetMovieByImdbId(movie.ImdbId, PlotSize.Short);
 
             compositeMovies.Add(new CompositeMovie(movie, omdbMovieDetails));
         }
@@ -167,7 +167,7 @@ public class CompositeMovieService : ICompositeMovieService
         return compositeMovies;
     }
 
-    public async Task<List<MovieViewModel>> GetFilteredMovieViewModels(MovieFilterDTO filterDTO)
+    public async Task<List<MovieViewModel>> GetFilteredMovieViewModels(MovieFilterDto filterDTO)
     {
         var query = this.ApplyRatingFilter(this.unitOfWork.MovieRepository.GetAsQueryable(), filterDTO.Rating);
 
@@ -195,7 +195,7 @@ public class CompositeMovieService : ICompositeMovieService
     public async Task<MovieViewModel> GetMovieViewModel(int movieId, PlotSize plotSize)
     {
         Movie movie = await Task.Run(() => this.unitOfWork.MovieRepository.GetMovie(movieId));
-        OmdbMovieDetails omdbMovieDetails = await this.omdbMovieReader.GetMovieByImdbId(movie.ImdbId, plotSize);
+        OmdbMovieDetailsDto omdbMovieDetails = await this.omdbMovieReader.GetMovieByImdbId(movie.ImdbId, plotSize);
         return new CompositeMovie(movie, omdbMovieDetails).ToMovieViewModel();
     }
 
@@ -253,7 +253,7 @@ public class CompositeMovieService : ICompositeMovieService
 
         foreach (var movie in movies)
         {
-            OmdbMovieDetails omdbMovieDetails = await this.omdbMovieReader.GetMovieByImdbId(movie.ImdbId, PlotSize.Short);
+            OmdbMovieDetailsDto omdbMovieDetails = await this.omdbMovieReader.GetMovieByImdbId(movie.ImdbId, PlotSize.Short);
             movieViewModels.Add(new CompositeMovie(movie, omdbMovieDetails).ToMovieViewModel());
         }
 

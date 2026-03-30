@@ -53,5 +53,6 @@ var app = builder.Build();
 
 app.MapDefaultEndpoints();
 app.ConfigureMiddleware();
+app.MapProxyEndpoint();
 
 app.Run();
