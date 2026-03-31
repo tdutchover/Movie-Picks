@@ -10,7 +10,7 @@ public interface IBackendMovieApiClient
 
     Task<List<CompositeMovie>> GetAllMovies();
 
-    Task<IEnumerable<OmdbMovieShortDetailsDTO>> SearchOmdbMoviesByTitlePatternAsync(string titlePattern);
+    Task<IEnumerable<OmdbMovieShortDetailsDto>> SearchOmdbMoviesByTitlePatternAsync(string titlePattern);
 
     Task<OmdbMovieDetailsDto> GetMovieByImdbIdAsync(string imdbId);
 

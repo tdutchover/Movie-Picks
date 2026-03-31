@@ -42,7 +42,7 @@ namespace MoviePicks.Api.Models;
 /// </summary>
 public class OmdbMovieSearchResult
 {
-    public OmdbMovieShortDetailsDTO[]? search { get; set; }
+    public OmdbMovieShortDetailsDto[]? search { get; set; }
 
     public string? totalResults { get; set; } // Example value "144"
 

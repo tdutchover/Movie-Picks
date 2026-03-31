@@ -1,4 +1,4 @@
-﻿namespace MoviePicks.Api.Services.ThirdPartyApiClients;
+﻿namespace MoviePicks.Api.Infrastructure.ThirdPartyApiClients;
 
 using MoviePicks.Api.Models;
 using MoviePicks.Contracts.DTOs;
@@ -39,7 +39,7 @@ public class OmdbApiMovieReader : IOmdbApiMovieReader
         return response;
     }
 
-    public async Task<List<OmdbMovieShortDetailsDTO>> SearchMoviesByTitle(string title)
+    public async Task<List<OmdbMovieShortDetailsDto>> SearchMoviesByTitle(string title)
     {
         HttpClient httpClient = this.httpClientFactory.CreateClient();
         httpClient.BaseAddress = new Uri(OmdbApiBaseUri);
@@ -57,7 +57,7 @@ public class OmdbApiMovieReader : IOmdbApiMovieReader
             // In this case, result will be valid. But result.Response will be "False".
             //
             // TODO: If result is null, then log something. Or perhaps throw InvalidOperationException and allow the caller to handle it and log it.
-            return new List<OmdbMovieShortDetailsDTO>();
+            return new List<OmdbMovieShortDetailsDto>();
         }
     }
 

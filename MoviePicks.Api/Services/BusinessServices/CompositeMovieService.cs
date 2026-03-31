@@ -3,9 +3,9 @@
 using Microsoft.EntityFrameworkCore;
 using MoviePicks.Api.Infrastructure.Exceptions;
 using MoviePicks.Api.Infrastructure.Mappers;
+using MoviePicks.Api.Infrastructure.ThirdPartyApiClients;
 using MoviePicks.Api.Models;
 using MoviePicks.Api.Repositories.Core;
-using MoviePicks.Api.Services.ThirdPartyApiClients;
 using MoviePicks.Contracts.DTOs;
 using MoviePicks.Contracts.Enums;
 using System.Collections.Generic;
@@ -19,6 +19,16 @@ public class CompositeMovieService : ICompositeMovieService
     {
         this.unitOfWork = unitOfWork;
         this.omdbMovieReader = omdbMovieReader;
+    }
+
+    public async Task<List<OmdbMovieShortDetailsDto>> SearchMoviesByTitle(string title)
+    {
+        return await this.omdbMovieReader.SearchMoviesByTitle(title);
+    }
+
+    public async Task<OmdbMovieDetailsDto> GetMovieByImdbId(string imdbId, PlotSize plotSize)
+    {
+        return await this.omdbMovieReader.GetMovieByImdbId(imdbId, plotSize);
     }
 
     public async Task<List<GenreDto>> GetAllGenresAsync()

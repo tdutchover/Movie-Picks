@@ -66,7 +66,7 @@ public class BackendMovieApiClient : IBackendMovieApiClient
         throw new NotImplementedException("RemoteCompositeMovieRepository::GetAllMovies not implemented.");
     }
 
-    public async Task<IEnumerable<OmdbMovieShortDetailsDTO>> SearchOmdbMoviesByTitlePatternAsync(string titlePattern)
+    public async Task<IEnumerable<OmdbMovieShortDetailsDto>> SearchOmdbMoviesByTitlePatternAsync(string titlePattern)
     {
         HttpClient httpClient = this.CreateHttpClient();
         string relativeUrl = $"omdb/{titlePattern}";
@@ -74,7 +74,7 @@ public class BackendMovieApiClient : IBackendMovieApiClient
         using HttpResponseMessage httpResponse = await httpClient.GetAsync(relativeUrl);
         httpResponse.EnsureSuccessStatusCode();
 
-        var results = await httpResponse.Content.ReadFromJsonAsync<IEnumerable<OmdbMovieShortDetailsDTO>>();
+        var results = await httpResponse.Content.ReadFromJsonAsync<IEnumerable<OmdbMovieShortDetailsDto>>();
 
         if (results == null)
         {

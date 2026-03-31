@@ -6,6 +6,10 @@ using MoviePicks.Contracts.Enums;
 
 public interface ICompositeMovieService
 {
+    Task<List<OmdbMovieShortDetailsDto>> SearchMoviesByTitle(string title);
+
+    Task<OmdbMovieDetailsDto> GetMovieByImdbId(string imdbId, PlotSize plotSize);
+
     Task<List<GenreDto>> GetAllGenresAsync();
 
     Task<List<CompositeMovie>> GetAllMovies();

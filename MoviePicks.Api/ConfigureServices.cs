@@ -4,10 +4,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using MoviePicks.Api.Repositories;
 using MoviePicks.Api.Repositories.Core;
-using MoviePicks.Api.Shared;
-using MoviePicks.Api.Services.ThirdPartyApiClients;
 using MoviePicks.Api.Services.BusinessServices;
 using MoviePicks.Api.Models;
+using MoviePicks.Api.Infrastructure.ThirdPartyApiClients;
 
 public static partial class ServiceCollectionExtensions
 {
@@ -45,34 +44,6 @@ public static partial class ServiceCollectionExtensions
 
         services.AddHttpClient();   // Needed to call web api. Registers service IHttpClientFactory
 
-        // We don't allow Cors during non-development mode to keep highest security during production
-        if (environment.IsDevelopment())
-        {
-            // Enabling Cors during development only, allows this backend HTTP API server to
-            // respond successfully to HTTP requests from the front-end UI project.
-            // In particular, before adding CORS for development, the front-end calls to
-            // OmdbController failed whether the request came from JavaScript
-            // or from Swagger API tests in the browser.
-            services.AddCorsPolicyForOmdbController();
-        }
-
         return services;
-    }
-
-    private static void AddCorsPolicyForOmdbController(this IServiceCollection services)
-    {
-        services.AddCors(options =>
-        {
-            options.AddPolicy(
-                name: BackendConstants.CorsPolicyName_AllowFrontend,
-                configurePolicy: corsPolicyBuilder =>
-                {
-                    const string FrontendOriginUrl = "http://localhost:5173";
-
-                    corsPolicyBuilder.WithOrigins(FrontendOriginUrl)
-                          .AllowAnyHeader()
-                          .WithMethods("GET");
-                });
-        });
     }
 }

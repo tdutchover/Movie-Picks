@@ -3,9 +3,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using MoviePicks.Api.Infrastructure.Mappers;
+using MoviePicks.Api.Infrastructure.ThirdPartyApiClients;
 using MoviePicks.Api.Models;
 using MoviePicks.Api.Services.BusinessServices;
-using MoviePicks.Api.Services.ThirdPartyApiClients;
 using MoviePicks.Contracts.DTOs;
 using MoviePicks.Contracts.Enums;
 
@@ -14,12 +14,10 @@ using MoviePicks.Contracts.Enums;
 public class CompositeMovieController : ControllerBase
 {
     private readonly ICompositeMovieService compositeMovieService;
-    private readonly IOmdbApiMovieReader omdbMovieReader;
 
     public CompositeMovieController(ICompositeMovieService compositeMovieService, IOmdbApiMovieReader omdbMovieReader)
     {
         this.compositeMovieService = compositeMovieService;
-        this.omdbMovieReader = omdbMovieReader;
     }
 
     // TODO: Refactor to use a DTO instead of MovieViewModel to better separate the API layer from the UI layer,
@@ -52,9 +50,9 @@ public class CompositeMovieController : ControllerBase
     // This allows me to have a clean URL for this method that doesn't include the method name, which is more
     // intuitive for this kind of search endpoint.
     [HttpGet("/api/CompositeMovie/omdb/{titlePattern}")]
-    public async Task<ActionResult<IEnumerable<OmdbMovieShortDetailsDTO>>> SearchOmdbMoviesByTitlePattern(string titlePattern)
+    public async Task<ActionResult<IEnumerable<OmdbMovieShortDetailsDto>>> SearchOmdbMoviesByTitlePattern(string titlePattern)
     {
-        return await this.omdbMovieReader.SearchMoviesByTitle(titlePattern);
+        return await this.compositeMovieService.SearchMoviesByTitle(titlePattern);
     }
 
     [HttpGet("/api/CompositeMovie/omdb/movie")]
@@ -65,7 +63,7 @@ public class CompositeMovieController : ControllerBase
             return this.BadRequest("imdbId not specified");
         }
 
-        var result = await this.omdbMovieReader.GetMovieByImdbId(imdbId, PlotSize.Short);
+        var result = await this.compositeMovieService.GetMovieByImdbId(imdbId, PlotSize.Short);
 
         if (result != null)
         {

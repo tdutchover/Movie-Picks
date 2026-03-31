@@ -2,49 +2,49 @@
 using MoviePicks.Web.Services.BackendApiClients;
 using Serilog;
 
-namespace MoviePicks.Web
+namespace MoviePicks.Web;
+
+/// <summary>
+/// Provides extension methods for mapping proxy endpoints that are intended to be called
+/// exclusively by the frontend JavaScript client. These endpoints forward requests to backend
+/// OMDB-related APIs, simplify client-side code, resolve backend URLs using Aspire, and eliminate
+/// the need for CORS handling by keeping all browser requests within the same origin.
+/// </summary>
+public static partial class EndpointExtensions
 {
-    public static partial class EndpointExtensions
+    /// <summary>
+    /// Maps proxy endpoints for OMDB movie search and details retrieval.
+    /// </summary>
+    public static void MapProxyEndpoints(this WebApplication app)
     {
-        public static void MapProxyEndpoint(this WebApplication app)
+        // Proxy endpoint for searching OMDB movies by title pattern (route parameter)..
+        app.MapGet("/api/proxy/omdb/movies/{titlePattern}", async (string titlePattern, IBackendMovieApiClient client) =>
         {
-            // This is a proxy endpoint for the JavaScript to invoke to get OMDB movies using a title pattern search.
-            // This simplifies client-side code by allowing the proxy to resolve the named backend URL using Aspire.
-            // It also elminates the need for backend CORS handling because the Javascript calls the front-end's
-            // proxy endpoint which then calls the backend API, keeping all calls within the same origin from the browser's perspective.
-            app.MapGet("/api/proxy/omdb/movies/{titlePattern}", async (string titlePattern, IBackendMovieApiClient client) =>
+            try
             {
-                try
-                {
-                    IEnumerable<OmdbMovieShortDetailsDTO> movieResults = await client.SearchOmdbMoviesByTitlePatternAsync(titlePattern);
-                    return Results.Ok(movieResults);
-                }
-                catch (Exception ex)
-                {
-                    // This hits your Serilog 'important-logs.json' because it's an Error
-                    Log.Error(ex, "Proxy failed to fetch OMDB metadata for pattern: {TitlePattern}", titlePattern);
-
-                    // Returns a 500 status with a clean message for the browser
-                    return Results.Problem("The movie service is currently unavailable.");
-                }
-            });
-
-            app.MapGet("/api/proxy/omdb/movie", async (string imdbId, IBackendMovieApiClient client) =>
+                IEnumerable<OmdbMovieShortDetailsDto> movieResults = await client.SearchOmdbMoviesByTitlePatternAsync(titlePattern);
+                return Results.Ok(movieResults);
+            }
+            catch (Exception ex)
             {
-                try
-                {
-                    OmdbMovieDetailsDto movieResult = await client.GetMovieByImdbIdAsync(imdbId);
-                    return Results.Ok(movieResult);
-                }
-                catch (Exception ex)
-                {
-                    // This hits your Serilog 'important-logs.json' because it's an Error
-                    Log.Error(ex, "Proxy failed to fetch movie from OMDB for pattern: {imdbId}", imdbId);
+                Log.Error(ex, "Proxy failed to fetch OMDB metadata for pattern: {TitlePattern}", titlePattern);
+                return Results.Problem("The movie service is currently unavailable.");
+            }
+        });
 
-                    // Returns a 500 status with a clean message for the browser
-                    return Results.Problem("The movie service is currently unavailable.");
-                }
-            });
-        }
+        // Proxy endpoint for retrieving OMDB movie details by IMDb ID (query parameter).
+        app.MapGet("/api/proxy/omdb/movie", async (string imdbId, IBackendMovieApiClient client) =>
+        {
+            try
+            {
+                OmdbMovieDetailsDto movieResult = await client.GetMovieByImdbIdAsync(imdbId);
+                return Results.Ok(movieResult);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Proxy failed to fetch movie from OMDB for pattern: {imdbId}", imdbId);
+                return Results.Problem("The movie service is currently unavailable.");
+            }
+        });
     }
 }
