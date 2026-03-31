@@ -152,7 +152,7 @@ public class MoviesController : Controller
     {
         if (this.ModelState.IsValid)
         {
-            MovieDTO movieDTO = movieViewModel.ToMovieDTO();
+            MovieDto movieDTO = movieViewModel.ToMovieDTO();
             await this.backendMovieApiClient.UpdateMovie(movieDTO);
             return this.RedirectToAction("Index");
         }

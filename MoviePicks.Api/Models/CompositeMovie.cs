@@ -1,8 +1,10 @@
-﻿namespace MoviePicks.Api.Models;
+﻿using MoviePicks.Contracts.DTOs;
+
+namespace MoviePicks.Api.Models;
 
 public class CompositeMovie
 {
-    public CompositeMovie(Movie movie, OmdbMovieDetails omdbMovieDetails)
+    public CompositeMovie(Movie movie, OmdbMovieDetailsDto omdbMovieDetails)
     {
         this.Movie = movie;
         this.MovieDetails = omdbMovieDetails;
@@ -10,5 +12,5 @@ public class CompositeMovie
 
     public Movie Movie { get; set; }
 
-    public OmdbMovieDetails MovieDetails { get; set; }
+    public OmdbMovieDetailsDto MovieDetails { get; set; }
 }

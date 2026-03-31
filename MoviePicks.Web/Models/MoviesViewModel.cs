@@ -6,5 +6,5 @@ public class MoviesViewModel
 {
     public IEnumerable<MovieViewModel> Movies { get; set; }
 
-    public IEnumerable<GenreDTO> Genres { get; set; }
+    public IEnumerable<GenreDto> Genres { get; set; }
 }

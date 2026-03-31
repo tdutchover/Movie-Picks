@@ -1,0 +1,16 @@
+<Project Sdk="Aspire.AppHost.Sdk/13.1.0">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <UserSecretsId>0e5be444-0eb2-409f-9f1c-fb2e11860efa</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MoviePicks.Api\MoviePicks.Api.csproj" />
+    <ProjectReference Include="..\MoviePicks.Web\MoviePicks.Web.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,4 +1,4 @@
-﻿namespace MoviePicks.Api.Models;
+﻿namespace MoviePicks.Contracts.DTOs;
 
 using System.Text.Json.Serialization;
 
@@ -13,20 +13,20 @@ using System.Text.Json.Serialization;
 ///     "Poster": "https://m.media-amazon.com/images/M/MV5BNDYxNjQyMjAtNTdiOS00NGYwLWFmNTAtNThmYjU5ZGI2YTI1XkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg"
 /// }
 /// </summary>
-public class OmdbMovieShortDetails
+public class OmdbMovieShortDetailsDto
 {
-    [JsonPropertyName("Title")]
-    public string? Title { get; set; }
+	[JsonPropertyName("Title")]
+	public string? Title { get; set; }
 
-    [JsonPropertyName("Year")]
-    public string? Year { get; set; }
+	[JsonPropertyName("Year")]
+	public string? Year { get; set; }
 
-    [JsonPropertyName("imdbID")]
-    public string? imdbID { get; set; }
+	[JsonPropertyName("imdbID")]
+	public string? imdbID { get; set; }
 
-    [JsonPropertyName("Type")]
-    public string? Type { get; set; }
+	[JsonPropertyName("Type")]
+	public string? Type { get; set; }
 
-    [JsonPropertyName("Poster")]
-    public string? Poster { get; set; }
+	[JsonPropertyName("Poster")]
+	public string? Poster { get; set; }
 }

@@ -1,7 +1,9 @@
 ﻿namespace MoviePicks.Api.Controllers;
 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using MoviePicks.Api.Infrastructure.Mappers;
+using MoviePicks.Api.Infrastructure.ThirdPartyApiClients;
 using MoviePicks.Api.Models;
 using MoviePicks.Api.Services.BusinessServices;
 using MoviePicks.Contracts.DTOs;
@@ -13,7 +15,7 @@ public class CompositeMovieController : ControllerBase
 {
     private readonly ICompositeMovieService compositeMovieService;
 
-    public CompositeMovieController(ICompositeMovieService compositeMovieService)
+    public CompositeMovieController(ICompositeMovieService compositeMovieService, IOmdbApiMovieReader omdbMovieReader)
     {
         this.compositeMovieService = compositeMovieService;
     }
@@ -44,10 +46,39 @@ public class CompositeMovieController : ControllerBase
         return this.Ok();
     }
 
+    // Use a "Root-Relative" Route on the Method until I remove the [action] token from the Controller's Route.
+    // This allows me to have a clean URL for this method that doesn't include the method name, which is more
+    // intuitive for this kind of search endpoint.
+    [HttpGet("/api/CompositeMovie/omdb/{titlePattern}")]
+    public async Task<ActionResult<IEnumerable<OmdbMovieShortDetailsDto>>> SearchOmdbMoviesByTitlePattern(string titlePattern)
+    {
+        return await this.compositeMovieService.SearchMoviesByTitle(titlePattern);
+    }
+
+    [HttpGet("/api/CompositeMovie/omdb/movie")]
+    public async Task<ActionResult<OmdbMovieDetailsDto>> GetMovieByImdbId([FromQuery][BindRequired] string imdbId)
+    {
+        if (imdbId == null || imdbId.Length == 0)
+        {
+            return this.BadRequest("imdbId not specified");
+        }
+
+        var result = await this.compositeMovieService.GetMovieByImdbId(imdbId, PlotSize.Short);
+
+        if (result != null)
+        {
+            return result;
+        }
+        else
+        {
+            return this.NotFound();
+        }
+    }
+
     [HttpGet]
     public async Task<IActionResult> GetAllGenres()
     {
-        List<GenreDTO> genres = await this.compositeMovieService.GetAllGenresAsync();
+        List<GenreDto> genres = await this.compositeMovieService.GetAllGenresAsync();
         return this.Ok(genres);
     }
 
@@ -80,7 +111,7 @@ public class CompositeMovieController : ControllerBase
     [HttpGet]
     [ProducesResponseType(typeof(List<MovieViewModel>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> GetFilteredMovieViewModels([FromQuery] MovieFilterDTO filterDTO)
+    public async Task<IActionResult> GetFilteredMovieViewModels([FromQuery] MovieFilterDto filterDTO)
     {
         var movieViewModels = await this.compositeMovieService.GetFilteredMovieViewModels(filterDTO);
         return this.Ok(movieViewModels);
@@ -93,7 +124,7 @@ public class CompositeMovieController : ControllerBase
     }
 
     [HttpPut]
-    public async Task<ActionResult<CompositeMovie>> UpdateMovie(MovieDTO movieDTO)
+    public async Task<ActionResult<CompositeMovie>> UpdateMovie(MovieDto movieDTO)
     {
         try
         {

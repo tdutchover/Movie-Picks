@@ -1,9 +1,4 @@
-﻿// TODO: For best security, restrict CORS access to just the domain we need. Currently, "*" allows access to all external domains.
-const header = new Headers({ "Access-Control-Allow-Origin": "*" });
-// TODO: Try using this to limit CORS access to only the single external domain needed.
-//const header = new Headers({ "Access-Control-Allow-Origin": "http://www.omdbapi.com" });
-
-const movieSearchBox = document.getElementById("search-text");
+﻿const movieSearchBox = document.getElementById("search-text");
 const movieCardsContainer = document.getElementById("movie-cards-container");
 const movieDetailsContainer = document.getElementById("movie-details-container");
 const errorDisplay = document.getElementById("error-loading-movies-by-title");
@@ -16,7 +11,7 @@ const viewerRatingInput = document.getElementById("viewer-rating");
 const reviewHeadingInput = document.getElementById("review-heading-input");
 const reviewCommentsInput = document.getElementById("review-comments-input");
 
-const backendServiceBaseUrl = `http://localhost:5053/api/Omdb/`;
+const backendServiceBaseUrl = `/api/proxy/omdb/`;
 
 const showMovieDetailsContainer = () => {
     movieDetailsContainer.classList.remove("hide-content");
@@ -31,11 +26,7 @@ async function fetchMoviesArray(titlePatternToSearch) {
         const relativeUrl = `movies/${titlePatternToSearch}`;
         const url = `${backendServiceBaseUrl}${relativeUrl}`;
 
-        // Header provided to enable CORS. This allows fetching movie data on the external omdbapi.com domain.
-        // Otherwise a CORS error would occur.
-        // Cross-origin resource sharing (CORS) is an HTTP feature that enables a web application running under
-        // one domain to access resources in another domain.
-        const response = await fetch(url, { header: header });
+        const response = await fetch(url);
 
         if (!response.ok) {
             console.log(`OMDB movie fetch response is false for URL ${url}`);
@@ -62,7 +53,7 @@ async function fetchMovieDetails(imdbId) {
         const relativeUrl = `movie?imdbId=${imdbId}`;
         const url = `${backendServiceBaseUrl}${relativeUrl}`;
 
-        const response = await fetch(url, { header: header });
+        const response = await fetch(url);
 
         if (!response.ok) {
             console.log(`HTTP response is not OK when fetching movie details. HTTP Response Status: ${response.status}, URL ${url}`);

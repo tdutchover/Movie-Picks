@@ -29,5 +29,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MoviePicks.Contracts\MoviePicks.Contracts.csproj" />
+    <ProjectReference Include="..\MoviePicks.ServiceDefaults\MoviePicks.ServiceDefaults.csproj" />
   </ItemGroup>
 </Project>

@@ -1,4 +1,4 @@
-﻿namespace MoviePicks.Api.Models;
+﻿namespace MoviePicks.Contracts.DTOs;
 
 using System.Text.Json.Serialization;
 
@@ -50,7 +50,7 @@ using System.Text.Json.Serialization;
 ///     "Response": "True"
 /// }
 /// </summary>
-public class OmdbMovieDetails
+public class OmdbMovieDetailsDto
 {
     [JsonPropertyName("Title")]
     public string Title { get; set; }
@@ -95,7 +95,7 @@ public class OmdbMovieDetails
     public string Poster { get; set; }
 
     [JsonPropertyName("Ratings")]
-    public OmdbRating[]? Ratings { get; set; }
+    public OmdbRatingDto[]? Ratings { get; set; }
 
     [JsonPropertyName("Metascore")]
     public string? Metascore { get; set; }

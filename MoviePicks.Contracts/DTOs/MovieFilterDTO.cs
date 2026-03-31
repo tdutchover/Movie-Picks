@@ -2,6 +2,6 @@
 
 using MoviePicks.Contracts;
 
-public class MovieFilterDTO : MovieFilterCriteriaBase
+public class MovieFilterDto : MovieFilterCriteriaBase
 {
 }

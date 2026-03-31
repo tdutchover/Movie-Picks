@@ -10,7 +10,6 @@ using System.Text.Json;
 
 public class BackendMovieApiClient : IBackendMovieApiClient
 {
-    private const string BaseUrl = "http://localhost:5053/api/CompositeMovie/";
     private static readonly TimeSpan FifteenSecondTimeout = TimeSpan.FromSeconds(15);
     private readonly IHttpClientFactory httpClientFactory;
     private readonly ILogger<BackendMovieApiClient> logger;
@@ -21,20 +20,20 @@ public class BackendMovieApiClient : IBackendMovieApiClient
         this.logger = logger;
     }
 
-    public async Task<List<GenreDTO>> GetAllGenres()
+    public async Task<List<GenreDto>> GetAllGenres()
     {
         var httpClient = this.CreateHttpClient();
         string relativeUri = $"GetAllGenres";
         using HttpResponseMessage response = await httpClient.GetAsync(relativeUri);
         response.EnsureSuccessStatusCode();
 
-        var genreList = await response.Content.ReadFromJsonAsync<List<GenreDTO>>();
+        var genreList = await response.Content.ReadFromJsonAsync<List<GenreDto>>();
 
         if (genreList == null)
         {
             // TODO: This should never occur.
             //       Log the error and return an empty list instead of throwing an exception
-            genreList = new List<GenreDTO>();
+            genreList = new List<GenreDto>();
         }
 
         return genreList;
@@ -65,6 +64,42 @@ public class BackendMovieApiClient : IBackendMovieApiClient
     public async Task<List<CompositeMovie>> GetAllMovies()
     {
         throw new NotImplementedException("RemoteCompositeMovieRepository::GetAllMovies not implemented.");
+    }
+
+    public async Task<IEnumerable<OmdbMovieShortDetailsDto>> SearchOmdbMoviesByTitlePatternAsync(string titlePattern)
+    {
+        HttpClient httpClient = this.CreateHttpClient();
+        string relativeUrl = $"omdb/{titlePattern}";
+
+        using HttpResponseMessage httpResponse = await httpClient.GetAsync(relativeUrl);
+        httpResponse.EnsureSuccessStatusCode();
+
+        var results = await httpResponse.Content.ReadFromJsonAsync<IEnumerable<OmdbMovieShortDetailsDto>>();
+
+        if (results == null)
+        {
+            throw new Exception($"Failed to retrieve results from OMDB movies matching title pattern: {titlePattern}");
+        }
+
+        return results;
+    }
+
+    public async Task<OmdbMovieDetailsDto> GetMovieByImdbIdAsync(string imdbId)
+    {
+        HttpClient httpClient = this.CreateHttpClient();
+        string relativeUrl = $"omdb/movie/?imdbId={imdbId}";
+
+        using HttpResponseMessage httpResponse = await httpClient.GetAsync(relativeUrl);
+        httpResponse.EnsureSuccessStatusCode();
+
+        var results = await httpResponse.Content.ReadFromJsonAsync<OmdbMovieDetailsDto>();
+
+        if (results == null)
+        {
+            throw new Exception($"Failed to retrieve results from OMDB movie for imdbId: {imdbId}");
+        }
+
+        return results;
     }
 
     public async Task<List<MovieViewModel>> GetAllMovieViewModels()
@@ -161,7 +196,7 @@ public class BackendMovieApiClient : IBackendMovieApiClient
         return movieViewModel;
     }
 
-    public async Task UpdateMovie(MovieDTO movieDTO)
+    public async Task UpdateMovie(MovieDto movieDTO)
     {
         HttpClient httpClient = this.CreateHttpClient();
         string relativeUri = $"UpdateMovie";

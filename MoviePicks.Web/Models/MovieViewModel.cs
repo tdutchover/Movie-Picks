@@ -114,7 +114,7 @@ public class MovieViewModel
     //         "Value": "73/100"
     //     }
     // ],
-    // public OmdbRating[]? Ratings { get; set; }
+    // public OmdbRatingDto[]? Ratings { get; set; }
 
     // public string? Metascore { get; set; }  //Example value: "73"
     // public string? imdbRating { get; set; } //Example value: "7.4"
