@@ -7,7 +7,7 @@ public class EntityDeletionException : Exception
     /// </summary>
     public int EntityId { get; }
 
-    // Base constructor
+    // Root constructor
     public EntityDeletionException(int entityId, string? message = null, Exception? innerException = null)
         : base(message ?? $"An error occurred while deleting the entity with ID {entityId}.", innerException)
     {

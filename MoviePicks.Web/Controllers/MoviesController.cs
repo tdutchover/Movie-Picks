@@ -16,14 +16,14 @@ public class MoviesController : Controller
     private const string NoImageAvailablePlaceholder = "~/images/No_Image.jpg";
 
     private readonly IWebHostEnvironment env;
-    private readonly IBackendMovieApiClient backendMovieApiClient;
+    private readonly IMoviesClient backendMovieApiClient;
     private readonly ILogger<MoviesController> logger;
     private readonly IMoviesService moviesService;
 
     public MoviesController(
         IWebHostEnvironment env,
         ILogger<MoviesController> logger,
-        IBackendMovieApiClient backendMovieApiClient,
+        IMoviesClient backendMovieApiClient,
         IMoviesService moviesService)
     {
         this.env = env;
@@ -38,7 +38,7 @@ public class MoviesController : Controller
         try
         {
             this.logger.LogInformation(LoggingEvents.ManageMovies, "Manage Movies");
-            List<MovieViewModel> movies = await this.backendMovieApiClient.GetAllMovieViewModels();
+            List<MovieViewModel> movies = await this.backendMovieApiClient.GetAllMoviesAsync();
             return this.View(movies);
         }
         catch (Exception ex)
@@ -80,7 +80,7 @@ public class MoviesController : Controller
     {
         try
         {
-            var movieViewModel = await this.backendMovieApiClient.GetMovieViewModel(movieId, PlotSize.Full);
+            var movieViewModel = await this.backendMovieApiClient.GetMovieAsync(movieId, PlotSize.Full);
             movieViewModel.Poster = this.GetMoviePosterOrDefaultNoImage(moviePosterUri: movieViewModel.Poster);
             return this.View(movieViewModel);
         }
@@ -114,7 +114,7 @@ public class MoviesController : Controller
 
         try
         {
-            await this.backendMovieApiClient.AddMovie(movieViewModel);
+            await this.backendMovieApiClient.CreateMovieAsync(movieViewModel);
             return this.RedirectToAction(nameof(this.Index));
         }
         catch (Exception ex)
@@ -133,7 +133,7 @@ public class MoviesController : Controller
     {
         try
         {
-            MovieViewModel movieViewModel = await this.backendMovieApiClient.GetMovieViewModel(id, PlotSize.Short);
+            MovieViewModel movieViewModel = await this.backendMovieApiClient.GetMovieAsync(id, PlotSize.Short);
             movieViewModel.Poster = this.GetMoviePosterOrDefaultNoImage(moviePosterUri: movieViewModel.Poster);
             return this.View(movieViewModel);
         }
@@ -153,7 +153,7 @@ public class MoviesController : Controller
         if (this.ModelState.IsValid)
         {
             MovieDto movieDTO = movieViewModel.ToMovieDTO();
-            await this.backendMovieApiClient.UpdateMovie(movieDTO);
+            await this.backendMovieApiClient.UpdateMovieAsync(movieDTO);
             return this.RedirectToAction("Index");
         }
         else
@@ -170,7 +170,7 @@ public class MoviesController : Controller
     {
         try
         {
-            await this.backendMovieApiClient.DeleteMovie(id);
+            await this.backendMovieApiClient.DeleteMovieAsync(id);
             this.TempData["SuccessMessage"] = "Movie deleted successfully";
             var urlToRedirect = this.Url.Action("Index", "Movies");
             return this.Json(new { redirectUrl = urlToRedirect });

@@ -10,25 +10,15 @@ using MoviePicks.Contracts.DTOs;
 using MoviePicks.Contracts.Enums;
 using System.Collections.Generic;
 
-public class CompositeMovieService : ICompositeMovieService
+public class MoviesService : IMoviesService
 {
     private readonly IUnitOfWork unitOfWork;
     private readonly IOmdbApiMovieReader omdbMovieReader;
 
-    public CompositeMovieService(DbMovieContext db, IUnitOfWork unitOfWork, IOmdbApiMovieReader omdbMovieReader)
+    public MoviesService(DbMovieContext db, IUnitOfWork unitOfWork, IOmdbApiMovieReader omdbMovieReader)
     {
         this.unitOfWork = unitOfWork;
         this.omdbMovieReader = omdbMovieReader;
-    }
-
-    public async Task<List<OmdbMovieShortDetailsDto>> SearchMoviesByTitle(string title)
-    {
-        return await this.omdbMovieReader.SearchMoviesByTitle(title);
-    }
-
-    public async Task<OmdbMovieDetailsDto> GetMovieByImdbId(string imdbId, PlotSize plotSize)
-    {
-        return await this.omdbMovieReader.GetMovieByImdbId(imdbId, plotSize);
     }
 
     public async Task<List<GenreDto>> GetAllGenresAsync()
@@ -37,7 +27,7 @@ public class CompositeMovieService : ICompositeMovieService
         return genres.Select(g => new GenreDto { Name = g.Name }).ToList();
     }
 
-    public async Task AddMovieAsync(MovieViewModel movieViewModel)
+    public async Task CreateMovieAsync(MovieViewModel movieViewModel)
     {
         // Add movie to database
         Movie movie = ToMovie(movieViewModel);
@@ -162,21 +152,6 @@ public class CompositeMovieService : ICompositeMovieService
         }
     }
 
-    public async Task<List<CompositeMovie>> GetAllMovies()
-    {
-        IEnumerable<Movie> movies = await this.unitOfWork.MovieRepository.GetAllAsync();
-        var compositeMovies = new List<CompositeMovie>();
-
-        foreach (Movie movie in movies)
-        {
-            OmdbMovieDetailsDto omdbMovieDetails = await this.omdbMovieReader.GetMovieByImdbId(movie.ImdbId, PlotSize.Short);
-
-            compositeMovies.Add(new CompositeMovie(movie, omdbMovieDetails));
-        }
-
-        return compositeMovies;
-    }
-
     public async Task<List<MovieViewModel>> GetFilteredMovieViewModels(MovieFilterDto filterDTO)
     {
         var query = this.ApplyRatingFilter(this.unitOfWork.MovieRepository.GetAsQueryable(), filterDTO.Rating);
@@ -192,7 +167,7 @@ public class CompositeMovieService : ICompositeMovieService
     {
         List<MovieViewModel> result = new List<MovieViewModel>();
 
-        List<CompositeMovie> list = await this.GetAllMovies();
+        List<CompositeMovie> list = await this.GetAllCompositeMovies();
 
         foreach (CompositeMovie cmovie in list)
         {
@@ -213,6 +188,21 @@ public class CompositeMovieService : ICompositeMovieService
     {
         await Task.Run(() => this.unitOfWork.MovieRepository.UpdateMovie(movie));
         await this.unitOfWork.SaveAsync();
+    }
+
+    private async Task<List<CompositeMovie>> GetAllCompositeMovies()
+    {
+        IEnumerable<Movie> movies = await this.unitOfWork.MovieRepository.GetAllAsync();
+        var compositeMovies = new List<CompositeMovie>();
+
+        foreach (Movie movie in movies)
+        {
+            OmdbMovieDetailsDto omdbMovieDetails = await this.omdbMovieReader.GetMovieByImdbId(movie.ImdbId, PlotSize.Short);
+
+            compositeMovies.Add(new CompositeMovie(movie, omdbMovieDetails));
+        }
+
+        return compositeMovies;
     }
 
     private IQueryable<Movie> ApplyRatingFilter(IQueryable<Movie> query, int? rating)

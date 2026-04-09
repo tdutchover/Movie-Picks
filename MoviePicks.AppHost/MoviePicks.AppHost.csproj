@@ -10,6 +10,16 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MoviePicks.Api\MoviePicks.Api.csproj" />
+
+    <!--
+      The IsAspireProjectResource="false" attribute tells Aspire to treat this
+      reference as a standard project reference.
+
+      References:
+        - Custom hosting integrations: https://aspire.dev/integrations/custom-integrations/hosting-integrations/
+        - Compiler Warning ASPIRE004:  https://aspire.dev/diagnostics/aspire004/
+    -->
+    <ProjectReference Include="..\MoviePicks.Contracts\MoviePicks.Contracts.csproj" IsAspireProjectResource="false" />
     <ProjectReference Include="..\MoviePicks.Web\MoviePicks.Web.csproj" />
   </ItemGroup>
 

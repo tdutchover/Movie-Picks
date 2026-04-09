@@ -1,28 +1,32 @@
-﻿using MoviePicks.Contracts.DTOs;
+﻿namespace MoviePicks.Web.Extensions;
+
+using MoviePicks.Contracts.DTOs;
 using MoviePicks.Web.Services.BackendApiClients;
 using Serilog;
 
-namespace MoviePicks.Web;
-
 /// <summary>
 /// Provides extension methods for mapping proxy endpoints that are intended to be called
-/// exclusively by the frontend JavaScript client. These endpoints forward requests to backend
-/// OMDB-related APIs, simplify client-side code, resolve backend URLs using Aspire, and eliminate
+/// exclusively by the frontend JavaScript moviesClient. These endpoints forward requests to backend
+/// OMDB-related APIs, simplify moviesClient-side code, resolve backend URLs using Aspire, and eliminate
 /// the need for CORS handling by keeping all browser requests within the same origin.
 /// </summary>
-public static partial class EndpointExtensions
+public static partial class ProxyEndpointExtensions
 {
     /// <summary>
     /// Maps proxy endpoints for OMDB movie search and details retrieval.
     /// </summary>
     public static void MapProxyEndpoints(this WebApplication app)
     {
+        var omdbProxy = app.MapGroup("/api/proxy/omdb");
+
         // Proxy endpoint for searching OMDB movies by title pattern (route parameter)..
-        app.MapGet("/api/proxy/omdb/movies/{titlePattern}", async (string titlePattern, IBackendMovieApiClient client) =>
+        omdbProxy.MapGet("/movies/{titlePattern}", async (string titlePattern, IOmdbClient client) =>
         {
             try
             {
-                IEnumerable<OmdbMovieShortDetailsDto> movieResults = await client.SearchOmdbMoviesByTitlePatternAsync(titlePattern);
+                IEnumerable<OmdbMovieShortDetailsDto> movieResults =
+                    await client.SearchOmdbMoviesByTitlePatternAsync(titlePattern);
+
                 return Results.Ok(movieResults);
             }
             catch (Exception ex)
@@ -33,7 +37,7 @@ public static partial class EndpointExtensions
         });
 
         // Proxy endpoint for retrieving OMDB movie details by IMDb ID (query parameter).
-        app.MapGet("/api/proxy/omdb/movie", async (string imdbId, IBackendMovieApiClient client) =>
+        omdbProxy.MapGet($"/movie", async (string imdbId, IOmdbClient client) =>
         {
             try
             {

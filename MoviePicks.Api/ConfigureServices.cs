@@ -27,7 +27,7 @@ public static partial class ServiceCollectionExtensions
         services.AddSwaggerGen();
 
         services.AddScoped<IUnitOfWork, UnitOfWork>();
-        services.AddScoped<ICompositeMovieService, CompositeMovieService>();
+        services.AddScoped<IMoviesService, MoviesService>();
         services.AddScoped<IMovieRepository, DbMovieRepository>();    // database repository service
         services.AddScoped<IOmdbApiMovieReader, OmdbApiMovieReader>();
 
