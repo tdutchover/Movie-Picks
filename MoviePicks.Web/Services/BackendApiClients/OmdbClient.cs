@@ -1,4 +1,5 @@
-﻿using MoviePicks.Contracts.DTOs;
+﻿using MoviePicks.Contracts;
+using MoviePicks.Contracts.DTOs;
 
 namespace MoviePicks.Web.Services.BackendApiClients;
 
@@ -13,8 +14,8 @@ public class OmdbClient : IOmdbClient
 
     public async Task<IEnumerable<OmdbMovieShortDetailsDto>> SearchOmdbMoviesByTitlePatternAsync(string titlePattern)
     {
-        string relativeUrl = $"{titlePattern}";
-        using HttpResponseMessage httpResponse = await this.httpClient.GetAsync(relativeUrl);
+        string path = $"{ApiRoutes.Omdb.Movies.Resource}?titlePattern={titlePattern}";
+        using HttpResponseMessage httpResponse = await this.httpClient.GetAsync(path);
         httpResponse.EnsureSuccessStatusCode();
 
         var results = await httpResponse.Content.ReadFromJsonAsync<IEnumerable<OmdbMovieShortDetailsDto>>();
@@ -29,8 +30,8 @@ public class OmdbClient : IOmdbClient
 
     public async Task<OmdbMovieDetailsDto> GetMovieByImdbIdAsync(string imdbId)
     {
-        string relativeUrl = $"?imdbId={imdbId}";
-        using HttpResponseMessage httpResponse = await this.httpClient.GetAsync(relativeUrl);
+        string path = $"{ApiRoutes.Omdb.Movies.Resource}/{imdbId}";
+        using HttpResponseMessage httpResponse = await this.httpClient.GetAsync(path);
         httpResponse.EnsureSuccessStatusCode();
 
         var results = await httpResponse.Content.ReadFromJsonAsync<OmdbMovieDetailsDto>();

@@ -1,25 +1,50 @@
 ﻿namespace MoviePicks.Contracts;
 
 /// <summary>
-/// Provides a centralized definition of HTTP API route templates.
+/// Centralized definition of HTTP API route templates. 
+/// Ensures consistency between API Controllers and HttpClient consumers.
 /// </summary>
 public static class ApiRoutes
 {
     private const string ApiRoot = "api";
 
-    public static class Movies
+    /// <summary>Routes for internal application resources.</summary>
+    public static class App
     {
-        public const string Base = $"{ApiRoot}/movies";
+        /// <summary>The logical root for all internal API calls. Use for HttpClient.BaseAddress.</summary>
+        public const string Root = $"{ApiRoot}/app";
 
-        public const string Genres = "genres";
-        public const string Filter = "filter";
+        public static class Movies
+        {
+            /// <summary>The URI segment identifying the movies resource.</summary>
+            public const string Resource = "movies";
+
+            /// <summary>The absolute route template for the MoviesController [Route] attribute.</summary>
+            public const string Base = $"{Root}/{Resource}";
+
+            /// <summary>Sub-resource segments for Controller action attributes.</summary>
+            public const string GenresSegment = "genres";
+            public const string FilterSegment = "filter";
+
+            /// <summary>Relative paths for client-side calls.</summary>
+            public const string Genres = $"{Resource}/{GenresSegment}";
+            public const string Filter = $"{Resource}/{FilterSegment}";
+        }
     }
 
+    /// <summary>Routes for third-party OMDB proxy endpoints.</summary>
     public static class Omdb
     {
-        public const string Base = $"{ApiRoot}/omdb";
+        /// <summary>The logical root for OMDB-related calls. Use for HttpClient.BaseAddress.</summary>
+        public const string Root = $"{ApiRoot}/omdb";
 
-        public const string Search = "movies";
-        public const string Detail = "movie";
+        public static class Movies
+        {
+            /// <summary>The URI segment identifying the OMDB movies resource.</summary>
+            public const string Resource = "movies";
+
+            /// <summary>The absolute route template for the OmdbMoviesController [Route] attribute.</summary>
+            public const string Base = $"{Root}/{Resource}";
+        }
     }
 }

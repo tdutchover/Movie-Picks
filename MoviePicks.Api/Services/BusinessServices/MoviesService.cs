@@ -13,9 +13,9 @@ using System.Collections.Generic;
 public class MoviesService : IMoviesService
 {
     private readonly IUnitOfWork unitOfWork;
-    private readonly IOmdbApiMovieReader omdbMovieReader;
+    private readonly IOmdbApiMoviesReader omdbMovieReader;
 
-    public MoviesService(DbMovieContext db, IUnitOfWork unitOfWork, IOmdbApiMovieReader omdbMovieReader)
+    public MoviesService(DbMovieContext db, IUnitOfWork unitOfWork, IOmdbApiMoviesReader omdbMovieReader)
     {
         this.unitOfWork = unitOfWork;
         this.omdbMovieReader = omdbMovieReader;

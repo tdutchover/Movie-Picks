@@ -4,24 +4,20 @@ using MoviePicks.Api.Models;
 using MoviePicks.Contracts.DTOs;
 using MoviePicks.Contracts.Enums;
 
-public class OmdbApiMovieReader : IOmdbApiMovieReader
+public class OmdbApiMoviesReader : IOmdbApiMoviesReader
 {
-    private const string OmdbApiBaseUri = "http://www.omdbapi.com/";
-    private readonly IHttpClientFactory httpClientFactory;
+    private readonly HttpClient httpClient;
     private readonly string apiKey;
 
-    public OmdbApiMovieReader(IConfiguration configurationManager, IHttpClientFactory httpClientFactory)
+    public OmdbApiMoviesReader(HttpClient httpClient, IConfiguration configuration)
     {
-        this.httpClientFactory = httpClientFactory;
-        this.apiKey = configurationManager[ConfigurationManagerKeys.OpenMovieDatabaseApiKey] ??
-            throw new ArgumentNullException(nameof(configurationManager), $"Failed to access configuration for key {ConfigurationManagerKeys.OpenMovieDatabaseApiKey}");
+        this.httpClient = httpClient;
+        this.apiKey = configuration[ConfigurationManagerKeys.OpenMovieDatabaseApiKey] ??
+            throw new ArgumentNullException(nameof(configuration), $"Failed to access configuration for key {ConfigurationManagerKeys.OpenMovieDatabaseApiKey}");
     }
 
     public async Task<OmdbMovieDetailsDto> GetMovieByImdbId(string imdbId, PlotSize plotSize)
     {
-        HttpClient httpClient = this.httpClientFactory.CreateClient();
-        httpClient.BaseAddress = new Uri(OmdbApiBaseUri);
-
         string url = $"?apikey={this.apiKey}&i={imdbId}";
 
         if (plotSize == PlotSize.Full)
@@ -29,7 +25,7 @@ public class OmdbApiMovieReader : IOmdbApiMovieReader
             url += "&plot=full";    // Retrieve full plot, not the short plot
         }
 
-        OmdbMovieDetailsDto? response = await httpClient.GetFromJsonAsync<OmdbMovieDetailsDto>(url);
+        OmdbMovieDetailsDto? response = await this.httpClient.GetFromJsonAsync<OmdbMovieDetailsDto>(url);
 
         if (response == null)
         {
@@ -41,11 +37,9 @@ public class OmdbApiMovieReader : IOmdbApiMovieReader
 
     public async Task<List<OmdbMovieShortDetailsDto>> SearchMoviesByTitle(string title)
     {
-        HttpClient httpClient = this.httpClientFactory.CreateClient();
-        httpClient.BaseAddress = new Uri(OmdbApiBaseUri);
         var url = $"?apikey={this.apiKey}&s={title}";
 
-        OmdbMovieSearchResult? result = await httpClient.GetFromJsonAsync<OmdbMovieSearchResult>(url);
+        OmdbMovieSearchResult? result = await this.httpClient.GetFromJsonAsync<OmdbMovieSearchResult>(url);
 
         if (result?.search != null && result.Response?.Equals("True") == true)
         {

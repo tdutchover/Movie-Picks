@@ -6,7 +6,7 @@ using MoviePicks.Contracts.Enums;
 /// <summary>
 /// Service to read public information about movies
 /// </summary>
-public interface IOmdbApiMovieReader
+public interface IOmdbApiMoviesReader
 {
     Task<List<OmdbMovieShortDetailsDto>> SearchMoviesByTitle(string title);
 

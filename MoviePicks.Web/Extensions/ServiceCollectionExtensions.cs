@@ -1,10 +1,8 @@
-﻿namespace MoviePicks.Web;
+﻿namespace MoviePicks.Web.Extensions;
 
 using MoviePicks.Contracts;
 using MoviePicks.Web.Services;
 using MoviePicks.Web.Services.BackendApiClients;
-using MoviePicks.Web.Shared;
-using System.Runtime.Intrinsics.Arm;
 
 public static partial class ServiceCollectionExtensions
 {
@@ -15,14 +13,9 @@ public static partial class ServiceCollectionExtensions
 
         // Needed to call web api. Registers service IHttpClientFactory
 
-        // Registers a named HttpClient for MoviesClient. Utilizes IHttpClientFactory for efficient
+        // Registers a typed HttpClient for MoviesClient. Utilizes IHttpClientFactory for efficient
         // management and lifecycle handling of HttpClient instances. This approach ensures optimal resource
         // usage and addresses common issues such as DNS changes over time.
-
-        // Registers a named HttpClient with the tag "MoviesClient". This setup leverages IHttpClientFactory for
-        // efficient HttpClient management and lifecycle handling, ensuring optimal resource usage and mitigating
-        // common issues like DNS changes over time.
-
         {
             string apiServiceHost = AspireResourceName
                     .ServiceDiscovery
@@ -31,7 +24,7 @@ public static partial class ServiceCollectionExtensions
 
             services.AddHttpClient<IMoviesClient, MoviesClient>(client =>
             {
-                client.BaseAddress = new Uri($"https+http://{apiServiceHost}/{ApiRoutes.Movies.Base}/");
+                client.BaseAddress = new Uri($"https+http://{apiServiceHost}/{ApiRoutes.App.Root}/");
 #if DEBUG
                 client.Timeout = Timeout.InfiniteTimeSpan; // No timeout for debugging
 #else
@@ -41,7 +34,7 @@ public static partial class ServiceCollectionExtensions
 
             services.AddHttpClient<IOmdbClient, OmdbClient>(client =>
             {
-                client.BaseAddress = new Uri($"https+http://{apiServiceHost}/{ApiRoutes.Omdb.Base}/");
+                client.BaseAddress = new Uri($"https+http://{apiServiceHost}/{ApiRoutes.Omdb.Root}/");
 #if DEBUG
                 client.Timeout = Timeout.InfiniteTimeSpan; // No timeout for debugging
 #else

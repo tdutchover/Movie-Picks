@@ -1,9 +1,8 @@
-﻿namespace MoviePicks.Api;
+﻿namespace MoviePicks.Api.Extensions;
 
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Net.Http;
 using System;
 using MoviePicks.Api.Models;
 
@@ -57,15 +56,6 @@ public static partial class WebApplicationExtensions
         app.UseSwaggerUI();
         app.UseExceptionHandler(DevExceptionHandlerEndpointPath); // Routes exceptions to the minimal API endpoint
         ConfigureExceptionHandlingEndpoint(app);
-
-        // Configure Cross-Origin Resource Sharing (CORS) policies.
-        // The order of UseCors in the middleware pipeline is critical:
-        // 1. Place UseCors before components that rely on cross-origin requests, such as controllers or endpoints.
-        // 2. In this backend Web API, UseCors is placed before UseAuthorization to ensure that CORS policies are applied to all incoming requests, including those requiring authorization.
-        // For more information, see:
-        // - See Enable Cross-Origin Requests (CORS) in ASP.NET Core at https://learn.microsoft.com/en-us/aspnet/core/security/cors?view=aspnetcore-9.0
-        // - See Middleware order at: https://learn.microsoft.com/en-us/aspnet/core/fundamentals/middleware/?view=aspnetcore-9.0#middleware-order
-        app.UseCors();
     }
 
     // This minimal API endpoint returns the prepared ProblemDetails response when an exception occurs.
