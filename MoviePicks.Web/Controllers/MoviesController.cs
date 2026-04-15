@@ -9,6 +9,7 @@ using MoviePicks.Web.Models;
 using MoviePicks.Web.Services;
 using MoviePicks.Web.Services.BackendApiClients;
 
+[Route("[controller]/[action]")]
 public class MoviesController : Controller
 {
     private const string NotApplicable = "N/A";

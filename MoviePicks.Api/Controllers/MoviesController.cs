@@ -8,7 +8,7 @@ using MoviePicks.Contracts;
 using MoviePicks.Contracts.DTOs;
 using MoviePicks.Contracts.Enums;
 
-[Route(ApiRoutes.App.Movies.Base)]
+[Route(ApiRoutes.App.Movies.ControllerRoute)]
 [ApiController]
 public class MoviesController : ControllerBase
 {
@@ -44,7 +44,7 @@ public class MoviesController : ControllerBase
         return this.Ok();
     }
 
-    [HttpGet(ApiRoutes.App.Movies.GenresSegment, Name = nameof(GetAllGenres))]
+    [HttpGet(ApiRoutes.App.Movies.Actions.Genres, Name = nameof(GetAllGenres))]
     public async Task<IActionResult> GetAllGenres()
     {
         List<GenreDto> genres = await this.moviesService.GetAllGenresAsync();
@@ -68,7 +68,7 @@ public class MoviesController : ControllerBase
     /// </param>
     /// <response code="200">Returns the list of movie view models.</response>
     /// <response code="500">If there is an internal server error.</response>
-    [HttpGet(ApiRoutes.App.Movies.FilterSegment, Name = nameof(GetFilteredMovies))]
+    [HttpGet(ApiRoutes.App.Movies.Actions.Filter, Name = nameof(GetFilteredMovies))]
     [ProducesResponseType(typeof(List<MovieViewModel>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> GetFilteredMovies([FromQuery] MovieFilterDto filterDTO)

@@ -14,7 +14,7 @@ public class OmdbClient : IOmdbClient
 
     public async Task<IEnumerable<OmdbMovieShortDetailsDto>> SearchOmdbMoviesByTitlePatternAsync(string titlePattern)
     {
-        string path = $"{ApiRoutes.Omdb.Movies.Resource}?titlePattern={titlePattern}";
+        string path = $"{ApiRoutes.Omdb.Movies.Paths.Movies}?titlePattern={titlePattern}";
         using HttpResponseMessage httpResponse = await this.httpClient.GetAsync(path);
         httpResponse.EnsureSuccessStatusCode();
 
@@ -30,7 +30,7 @@ public class OmdbClient : IOmdbClient
 
     public async Task<OmdbMovieDetailsDto> GetMovieByImdbIdAsync(string imdbId)
     {
-        string path = $"{ApiRoutes.Omdb.Movies.Resource}/{imdbId}";
+        string path = $"{ApiRoutes.Omdb.Movies.Paths.Movies}/{imdbId}";
         using HttpResponseMessage httpResponse = await this.httpClient.GetAsync(path);
         httpResponse.EnsureSuccessStatusCode();
 

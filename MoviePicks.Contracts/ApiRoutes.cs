@@ -1,50 +1,69 @@
 ﻿namespace MoviePicks.Contracts;
 
 /// <summary>
-/// Centralized definition of HTTP API route templates. 
-/// Ensures consistency between API Controllers and HttpClient consumers.
+/// Centralized definition of HTTP API routes.
+/// Ensures consistency between API controllers and their HttpClient consumers.
+///
+/// Convention:
+///   ControllerRoute  — absolute route for the [Route] attribute on the controller class.
+///   Actions.*        — sub-segments for [HttpGet] / [HttpPost] / etc. on action methods.
+///                      These are relative to ControllerRoute and must not include it.
+///   Paths.*          — paths relative to the HttpClient.BaseAddress registered in DI.
+///                      Used by HttpClient consumers (e.g. MoviesClient, OmdbClient).
 /// </summary>
 public static class ApiRoutes
 {
     private const string ApiRoot = "api";
 
-    /// <summary>Routes for internal application resources.</summary>
+    /// <summary>Routes for internal application endpoints.</summary>
     public static class App
     {
-        /// <summary>The logical root for all internal API calls. Use for HttpClient.BaseAddress.</summary>
-        public const string Root = $"{ApiRoot}/app";
+        /// <summary>
+        /// Appended to the host when constructing BaseAddress for MoviesClient.
+        /// e.g. https+http://moviepicks-api/api/app/
+        /// </summary>
+        public const string BasePath = $"{ApiRoot}/app";
 
         public static class Movies
         {
-            /// <summary>The URI segment identifying the movies resource.</summary>
-            public const string Resource = "movies";
+            // Controller routing (API layer)
+            public const string ControllerRoute = $"{BasePath}/movies";
 
-            /// <summary>The absolute route template for the MoviesController [Route] attribute.</summary>
-            public const string Base = $"{Root}/{Resource}";
+            public static class Actions
+            {
+                public const string Genres = "genres";
+                public const string Filter = "filter";
+            }
 
-            /// <summary>Sub-resource segments for Controller action attributes.</summary>
-            public const string GenresSegment = "genres";
-            public const string FilterSegment = "filter";
-
-            /// <summary>Relative paths for client-side calls.</summary>
-            public const string Genres = $"{Resource}/{GenresSegment}";
-            public const string Filter = $"{Resource}/{FilterSegment}";
+            // HttpClient paths (relative to BaseAddress)
+            public static class Paths
+            {
+                public const string Movies = "movies";
+                public const string Genres = "movies/genres";
+                public const string Filter = "movies/filter";
+            }
         }
     }
 
-    /// <summary>Routes for third-party OMDB proxy endpoints.</summary>
+    /// <summary>Routes for OMDB proxy endpoints.</summary>
     public static class Omdb
     {
-        /// <summary>The logical root for OMDB-related calls. Use for HttpClient.BaseAddress.</summary>
-        public const string Root = $"{ApiRoot}/omdb";
+        /// <summary>
+        /// Appended to the host when constructing BaseAddress for OmdbClient.
+        /// e.g. https+http://moviepicks-api/api/omdb/
+        /// </summary>
+        public const string BasePath = $"{ApiRoot}/omdb";
 
         public static class Movies
         {
-            /// <summary>The URI segment identifying the OMDB movies resource.</summary>
-            public const string Resource = "movies";
+            // Controller routing (API layer)
+            public const string ControllerRoute = $"{BasePath}/movies";
 
-            /// <summary>The absolute route template for the OmdbMoviesController [Route] attribute.</summary>
-            public const string Base = $"{Root}/{Resource}";
+            // HttpClient paths (relative to BaseAddress)
+            public static class Paths
+            {
+                public const string Movies = "movies";
+            }
         }
     }
 }

@@ -7,7 +7,7 @@ using MoviePicks.Contracts.DTOs;
 using MoviePicks.Contracts.Enums;
 using System.ComponentModel.DataAnnotations;
 
-[Route(ApiRoutes.Omdb.Movies.Base)]
+[Route(ApiRoutes.Omdb.Movies.ControllerRoute)]
 [ApiController]
 public class OmdbMoviesController : ControllerBase
 {

@@ -11,11 +11,7 @@ public static partial class ServiceCollectionExtensions
         // Add services to the container.
         services.AddControllersWithViews();
 
-        // Needed to call web api. Registers service IHttpClientFactory
-
-        // Registers a typed HttpClient for MoviesClient. Utilizes IHttpClientFactory for efficient
-        // management and lifecycle handling of HttpClient instances. This approach ensures optimal resource
-        // usage and addresses common issues such as DNS changes over time.
+        // Registers typed HttpClients that are each injected with their BaseAddress pre-configured.
         {
             string apiServiceHost = AspireResourceName
                     .ServiceDiscovery
@@ -24,7 +20,7 @@ public static partial class ServiceCollectionExtensions
 
             services.AddHttpClient<IMoviesClient, MoviesClient>(client =>
             {
-                client.BaseAddress = new Uri($"https+http://{apiServiceHost}/{ApiRoutes.App.Root}/");
+                client.BaseAddress = new Uri($"https+http://{apiServiceHost}/{ApiRoutes.App.BasePath}/");
 #if DEBUG
                 client.Timeout = Timeout.InfiniteTimeSpan; // No timeout for debugging
 #else
@@ -34,7 +30,7 @@ public static partial class ServiceCollectionExtensions
 
             services.AddHttpClient<IOmdbClient, OmdbClient>(client =>
             {
-                client.BaseAddress = new Uri($"https+http://{apiServiceHost}/{ApiRoutes.Omdb.Root}/");
+                client.BaseAddress = new Uri($"https+http://{apiServiceHost}/{ApiRoutes.Omdb.BasePath}/");
 #if DEBUG
                 client.Timeout = Timeout.InfiniteTimeSpan; // No timeout for debugging
 #else

@@ -21,7 +21,7 @@ public class MoviesClient : IMoviesClient
 
     public async Task<List<GenreDto>> GetAllGenresAsync()
     {
-        const string path = ApiRoutes.App.Movies.Genres;
+        const string path = ApiRoutes.App.Movies.Paths.Genres;
         using HttpResponseMessage response = await this.httpClient.GetAsync(path);
         response.EnsureSuccessStatusCode();
 
@@ -39,7 +39,7 @@ public class MoviesClient : IMoviesClient
 
     public async Task CreateMovieAsync(MovieViewModel movieViewModel)
     {
-        const string path = $"{ApiRoutes.App.Movies.Resource}";
+        const string path = $"{ApiRoutes.App.Movies.Paths.Movies}";
         using HttpResponseMessage httpResponse = await this.httpClient.PostAsJsonAsync(path, movieViewModel);
 
         // TODO Change to use this more refined API that sends only a Movie object instead of the larger MovieViewModel
@@ -51,7 +51,7 @@ public class MoviesClient : IMoviesClient
 
     public async Task<bool> DeleteMovieAsync(int movieId)
     {
-        string path = $"{ApiRoutes.App.Movies.Resource}/{movieId}";
+        string path = $"{ApiRoutes.App.Movies.Paths.Movies}/{movieId}";
         using HttpResponseMessage httpResponse = await this.httpClient.DeleteAsync(path);
         httpResponse.EnsureSuccessStatusCode(); // throws if not 200-299
         return true;
@@ -59,7 +59,7 @@ public class MoviesClient : IMoviesClient
 
     public async Task<List<MovieViewModel>> GetAllMoviesAsync()
     {
-        const string path = $"{ApiRoutes.App.Movies.Resource}";
+        const string path = $"{ApiRoutes.App.Movies.Paths.Movies}";
         using HttpResponseMessage httpResponse = await this.httpClient.GetAsync(path);
         httpResponse.EnsureSuccessStatusCode(); // throws if not 200-299
 
@@ -76,7 +76,7 @@ public class MoviesClient : IMoviesClient
     public async Task<List<MovieViewModel>> GetFilteredMovies(MovieFilterFormModel filterCriteria)
     {
         string queryString = BuildMovieFilterQueryString(filterCriteria);
-        string path = $"{ApiRoutes.App.Movies.Filter}{queryString}";
+        string path = $"{ApiRoutes.App.Movies.Paths.Filter}{queryString}";
 
         using HttpResponseMessage httpResponse = await this.httpClient.GetAsync(path);
 
@@ -132,7 +132,7 @@ public class MoviesClient : IMoviesClient
 
     public async Task<MovieViewModel> GetMovieAsync(int movieId, PlotSize plotSize)
     {
-        string path = $"{ApiRoutes.App.Movies.Resource}/{movieId}?plotSize={plotSize.ToString()}";
+        string path = $"{ApiRoutes.App.Movies.Paths.Movies}/{movieId}?plotSize={plotSize.ToString()}";
 
         using HttpResponseMessage httpResponse = await this.httpClient.GetAsync(path);
         httpResponse.EnsureSuccessStatusCode(); // throws if not 200-299
@@ -149,7 +149,7 @@ public class MoviesClient : IMoviesClient
 
     public async Task UpdateMovieAsync(MovieDto movieDTO)
     {
-        const string path = $"{ApiRoutes.App.Movies.Resource}";
+        const string path = $"{ApiRoutes.App.Movies.Paths.Movies}";
         using HttpResponseMessage httpResponse = await this.httpClient.PutAsJsonAsync(path, movieDTO);
         httpResponse.EnsureSuccessStatusCode(); // throws if not 200-299
     }
