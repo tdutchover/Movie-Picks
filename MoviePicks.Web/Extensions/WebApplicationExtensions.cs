@@ -1,4 +1,4 @@
-﻿namespace MoviePicks.Web;
+﻿namespace MoviePicks.Web.Extensions;
 
 using Serilog;
 using System.Diagnostics;   // For .Debug class

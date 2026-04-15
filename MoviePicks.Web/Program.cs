@@ -1,4 +1,4 @@
-using MoviePicks.Web;
+using MoviePicks.Web.Extensions;
 using Serilog;
 using Serilog.Events;
 using Serilog.Formatting.Json;

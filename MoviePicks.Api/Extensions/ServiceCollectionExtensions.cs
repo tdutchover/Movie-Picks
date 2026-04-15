@@ -1,18 +1,18 @@
-﻿namespace MoviePicks.Api;
+﻿namespace MoviePicks.Api.Extensions;
 
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using MoviePicks.Api.Infrastructure.ThirdPartyApiClients;
+using MoviePicks.Api.Models;
 using MoviePicks.Api.Repositories;
 using MoviePicks.Api.Repositories.Core;
 using MoviePicks.Api.Services.BusinessServices;
-using MoviePicks.Api.Models;
-using MoviePicks.Api.Infrastructure.ThirdPartyApiClients;
 
 public static partial class ServiceCollectionExtensions
 {
     public static IServiceCollection ConfigureServices(
         this IServiceCollection services,
-        IConfiguration configurationManager,
+        IConfiguration configuration,
         IWebHostEnvironment environment)
     {
         // Add the IProblemDetailsService implementation that is used by
@@ -27,9 +27,10 @@ public static partial class ServiceCollectionExtensions
         services.AddSwaggerGen();
 
         services.AddScoped<IUnitOfWork, UnitOfWork>();
-        services.AddScoped<ICompositeMovieService, CompositeMovieService>();
+        services.AddScoped<IMoviesService, MoviesService>();
         services.AddScoped<IMovieRepository, DbMovieRepository>();    // database repository service
-        services.AddScoped<IOmdbApiMovieReader, OmdbApiMovieReader>();
+
+        services.AddOmdbIntegration(configuration);
 
         // Secrets are configured as follows:
         //      Development environment: secrets are retrieved from the local secrets.json file on a developer's machine.
@@ -37,7 +38,7 @@ public static partial class ServiceCollectionExtensions
         // The following secrets are used by this backend service:
         //      OMDB API Key
         //      database connection string
-        services.AddDbContext<DbMovieContext>(options => options.UseSqlServer(configurationManager.GetConnectionString("movieDatabaseSqlServer")));
+        services.AddDbContext<DbMovieContext>(options => options.UseSqlServer(configuration.GetConnectionString("movieDatabaseSqlServer")));
 
         // Alternate SQLite DB for possible use during deployment in case SQLServer hosting costs money
         //builder.Services.AddDbContext<DbMovieContext>(options => options.UseSqlite("Data Source=MovieDb.db"));

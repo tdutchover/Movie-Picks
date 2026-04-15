@@ -5,9 +5,9 @@ using MoviePicks.Web.Services.BackendApiClients;
 
 public class MoviesService : IMoviesService
 {
-    private readonly IBackendMovieApiClient backendMovieApiClient;
+    private readonly IMoviesClient backendMovieApiClient;
 
-    public MoviesService(IBackendMovieApiClient backendMovieApiClient)
+    public MoviesService(IMoviesClient backendMovieApiClient)
     {
         this.backendMovieApiClient = backendMovieApiClient;
     }
@@ -17,7 +17,7 @@ public class MoviesService : IMoviesService
     /// </summary>
     public async Task<MoviesViewModel> FetchAllMovieViewModelsAsync()
     {
-        return await this.FetchViewModelsAsync(() => this.backendMovieApiClient.GetAllMovieViewModels());
+        return await this.FetchViewModelsAsync(() => this.backendMovieApiClient.GetAllMoviesAsync());
     }
 
     /// <summary>
@@ -25,13 +25,13 @@ public class MoviesService : IMoviesService
     /// </summary>
     public async Task<MoviesViewModel> FetchFilteredMovieViewModelsAsync(MovieFilterFormModel filterCriteria)
     {
-        return await this.FetchViewModelsAsync(() => this.backendMovieApiClient.GetFilteredMovieViewModels(filterCriteria));
+        return await this.FetchViewModelsAsync(() => this.backendMovieApiClient.GetFilteredMovies(filterCriteria));
     }
 
     private async Task<MoviesViewModel> FetchViewModelsAsync(Func<Task<List<MovieViewModel>>> fetchMoviesFunc)
     {
         var moviesTask = fetchMoviesFunc();
-        var genresTask = this.backendMovieApiClient.GetAllGenres();
+        var genresTask = this.backendMovieApiClient.GetAllGenresAsync();
         await Task.WhenAll(moviesTask, genresTask);
 
         var viewModel = new MoviesViewModel

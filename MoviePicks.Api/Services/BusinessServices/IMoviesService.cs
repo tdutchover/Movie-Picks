@@ -4,15 +4,9 @@ using MoviePicks.Api.Models;
 using MoviePicks.Contracts.DTOs;
 using MoviePicks.Contracts.Enums;
 
-public interface ICompositeMovieService
+public interface IMoviesService
 {
-    Task<List<OmdbMovieShortDetailsDto>> SearchMoviesByTitle(string title);
-
-    Task<OmdbMovieDetailsDto> GetMovieByImdbId(string imdbId, PlotSize plotSize);
-
     Task<List<GenreDto>> GetAllGenresAsync();
-
-    Task<List<CompositeMovie>> GetAllMovies();
 
     Task<List<MovieViewModel>> GetFilteredMovieViewModels(MovieFilterDto filterDTO);
 
@@ -20,7 +14,7 @@ public interface ICompositeMovieService
 
     Task<MovieViewModel> GetMovieViewModel(int movieId, PlotSize plotSize);
 
-    Task AddMovieAsync(MovieViewModel movieViewModel);
+    Task CreateMovieAsync(MovieViewModel movieViewModel);
 
     Task<bool> DeleteMovieAsync(int movieId);
 

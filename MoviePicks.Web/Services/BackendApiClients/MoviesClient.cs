@@ -5,26 +5,24 @@ using MoviePicks.Contracts;
 using MoviePicks.Contracts.DTOs;
 using MoviePicks.Contracts.Enums;
 using MoviePicks.Web.Models;
-using MoviePicks.Web.Shared;
 using System.Text.Json;
 
-public class BackendMovieApiClient : IBackendMovieApiClient
+public class MoviesClient : IMoviesClient
 {
     private static readonly TimeSpan FifteenSecondTimeout = TimeSpan.FromSeconds(15);
-    private readonly IHttpClientFactory httpClientFactory;
-    private readonly ILogger<BackendMovieApiClient> logger;
+    private readonly HttpClient httpClient;
+    private readonly ILogger<MoviesClient> logger;
 
-    public BackendMovieApiClient(IHttpClientFactory httpClientFactory, ILogger<BackendMovieApiClient> logger)
+    public MoviesClient(HttpClient httpClient, ILogger<MoviesClient> logger)
     {
-        this.httpClientFactory = httpClientFactory;
+        this.httpClient = httpClient;
         this.logger = logger;
     }
 
-    public async Task<List<GenreDto>> GetAllGenres()
+    public async Task<List<GenreDto>> GetAllGenresAsync()
     {
-        var httpClient = this.CreateHttpClient();
-        string relativeUri = $"GetAllGenres";
-        using HttpResponseMessage response = await httpClient.GetAsync(relativeUri);
+        const string path = ApiRoutes.App.Movies.Paths.Genres;
+        using HttpResponseMessage response = await this.httpClient.GetAsync(path);
         response.EnsureSuccessStatusCode();
 
         var genreList = await response.Content.ReadFromJsonAsync<List<GenreDto>>();
@@ -39,75 +37,30 @@ public class BackendMovieApiClient : IBackendMovieApiClient
         return genreList;
     }
 
-    public async Task AddMovie(MovieViewModel movieViewModel)
+    public async Task CreateMovieAsync(MovieViewModel movieViewModel)
     {
-        HttpClient httpClient = this.CreateHttpClient();
-        string relativeUri = $"AddMovie";
+        const string path = $"{ApiRoutes.App.Movies.Paths.Movies}";
+        using HttpResponseMessage httpResponse = await this.httpClient.PostAsJsonAsync(path, movieViewModel);
 
         // TODO Change to use this more refined API that sends only a Movie object instead of the larger MovieViewModel
-        //      using HttpResponseMessage httpResponse = await httpClient.PostAsJsonAsync<Movie>(relativeUri, movieViewModel.ToMovie());
-        using HttpResponseMessage httpResponse = await httpClient.PostAsJsonAsync(relativeUri, movieViewModel);
+        //      using HttpResponseMessage httpResponse = await httpClient.PostAsJsonAsync<Movie>(path, movieViewModel.ToMovie());
+        //using HttpResponseMessage httpResponse = await httpClient.PostAsJsonAsync(path, movieViewModel);
 
         httpResponse.EnsureSuccessStatusCode(); // throws if not 200-299
     }
 
-    public async Task<bool> DeleteMovie(int movieId)
+    public async Task<bool> DeleteMovieAsync(int movieId)
     {
-        HttpClient httpClient = this.CreateHttpClient();
-        string relativeUri = $"DeleteMovie/{movieId}";
-
-        using HttpResponseMessage httpResponse = await httpClient.DeleteAsync(relativeUri);
+        string path = $"{ApiRoutes.App.Movies.Paths.Movies}/{movieId}";
+        using HttpResponseMessage httpResponse = await this.httpClient.DeleteAsync(path);
         httpResponse.EnsureSuccessStatusCode(); // throws if not 200-299
         return true;
     }
 
-    public async Task<List<CompositeMovie>> GetAllMovies()
+    public async Task<List<MovieViewModel>> GetAllMoviesAsync()
     {
-        throw new NotImplementedException("RemoteCompositeMovieRepository::GetAllMovies not implemented.");
-    }
-
-    public async Task<IEnumerable<OmdbMovieShortDetailsDto>> SearchOmdbMoviesByTitlePatternAsync(string titlePattern)
-    {
-        HttpClient httpClient = this.CreateHttpClient();
-        string relativeUrl = $"omdb/{titlePattern}";
-
-        using HttpResponseMessage httpResponse = await httpClient.GetAsync(relativeUrl);
-        httpResponse.EnsureSuccessStatusCode();
-
-        var results = await httpResponse.Content.ReadFromJsonAsync<IEnumerable<OmdbMovieShortDetailsDto>>();
-
-        if (results == null)
-        {
-            throw new Exception($"Failed to retrieve results from OMDB movies matching title pattern: {titlePattern}");
-        }
-
-        return results;
-    }
-
-    public async Task<OmdbMovieDetailsDto> GetMovieByImdbIdAsync(string imdbId)
-    {
-        HttpClient httpClient = this.CreateHttpClient();
-        string relativeUrl = $"omdb/movie/?imdbId={imdbId}";
-
-        using HttpResponseMessage httpResponse = await httpClient.GetAsync(relativeUrl);
-        httpResponse.EnsureSuccessStatusCode();
-
-        var results = await httpResponse.Content.ReadFromJsonAsync<OmdbMovieDetailsDto>();
-
-        if (results == null)
-        {
-            throw new Exception($"Failed to retrieve results from OMDB movie for imdbId: {imdbId}");
-        }
-
-        return results;
-    }
-
-    public async Task<List<MovieViewModel>> GetAllMovieViewModels()
-    {
-        HttpClient httpClient = this.CreateHttpClient();
-        string relativeUrl = $"GetAllMovieViewModels";
-
-        using HttpResponseMessage httpResponse = await httpClient.GetAsync(relativeUrl);
+        const string path = $"{ApiRoutes.App.Movies.Paths.Movies}";
+        using HttpResponseMessage httpResponse = await this.httpClient.GetAsync(path);
         httpResponse.EnsureSuccessStatusCode(); // throws if not 200-299
 
         var movieViewModels = await httpResponse.Content.ReadFromJsonAsync<List<MovieViewModel>>();
@@ -120,13 +73,12 @@ public class BackendMovieApiClient : IBackendMovieApiClient
         return movieViewModels;
     }
 
-    public async Task<List<MovieViewModel>> GetFilteredMovieViewModels(MovieFilterFormModel filterCriteria)
+    public async Task<List<MovieViewModel>> GetFilteredMovies(MovieFilterFormModel filterCriteria)
     {
         string queryString = BuildMovieFilterQueryString(filterCriteria);
-        string relativeUrl = $"GetFilteredMovieViewModels{queryString}";
+        string path = $"{ApiRoutes.App.Movies.Paths.Filter}{queryString}";
 
-        HttpClient httpClient = this.CreateHttpClient();
-        using HttpResponseMessage httpResponse = await httpClient.GetAsync(relativeUrl);
+        using HttpResponseMessage httpResponse = await this.httpClient.GetAsync(path);
 
         if (!httpResponse.IsSuccessStatusCode)
         {
@@ -178,12 +130,11 @@ public class BackendMovieApiClient : IBackendMovieApiClient
         return movieViewModels;
     }
 
-    public async Task<MovieViewModel> GetMovieViewModel(int movieId, PlotSize plotSize)
+    public async Task<MovieViewModel> GetMovieAsync(int movieId, PlotSize plotSize)
     {
-        HttpClient httpClient = this.CreateHttpClient();
-        string relativeUrl = $"GetMovieViewModel/{movieId}?plotSize={plotSize.ToString()}";
+        string path = $"{ApiRoutes.App.Movies.Paths.Movies}/{movieId}?plotSize={plotSize.ToString()}";
 
-        using HttpResponseMessage httpResponse = await httpClient.GetAsync(relativeUrl);
+        using HttpResponseMessage httpResponse = await this.httpClient.GetAsync(path);
         httpResponse.EnsureSuccessStatusCode(); // throws if not 200-299
 
         var movieViewModel = await httpResponse.Content.ReadFromJsonAsync<MovieViewModel>();
@@ -196,12 +147,10 @@ public class BackendMovieApiClient : IBackendMovieApiClient
         return movieViewModel;
     }
 
-    public async Task UpdateMovie(MovieDto movieDTO)
+    public async Task UpdateMovieAsync(MovieDto movieDTO)
     {
-        HttpClient httpClient = this.CreateHttpClient();
-        string relativeUri = $"UpdateMovie";
-
-        using HttpResponseMessage httpResponse = await httpClient.PutAsJsonAsync(relativeUri, movieDTO);
+        const string path = $"{ApiRoutes.App.Movies.Paths.Movies}";
+        using HttpResponseMessage httpResponse = await this.httpClient.PutAsJsonAsync(path, movieDTO);
         httpResponse.EnsureSuccessStatusCode(); // throws if not 200-299
     }
 
@@ -225,10 +174,5 @@ public class BackendMovieApiClient : IBackendMovieApiClient
         var queryString = QueryString.Create(queryParameters).ToString();
 
         return queryString;
-    }
-
-    private HttpClient CreateHttpClient()
-    {
-        return this.httpClientFactory.CreateClient(FrontendConstants.HttpClientNameTags.BackendMovieApiClientName);
     }
 }
