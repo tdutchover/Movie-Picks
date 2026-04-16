@@ -1,5 +1,6 @@
 using Microsoft.Extensions.Options;
-using MoviePicks.Api.Extensions;
+using MoviePicks.Api.Startup;
+using MoviePicks.Api.Routing;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -9,14 +10,12 @@ builder.Services.ConfigureServices(builder.Configuration, builder.Environment);
 
 var app = builder.Build();
 
-// Add Aspire telemetry configuration
-app.MapDefaultEndpoints();
-
 var logger = app.Services.GetRequiredService<ILogger<Program>>();
 
 try
 {
     app.ConfigureMiddleware();
+    app.MapEndpoints();
     app.Run();
 }
 catch (OptionsValidationException ex)

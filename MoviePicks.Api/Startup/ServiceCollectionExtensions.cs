@@ -1,4 +1,4 @@
-﻿namespace MoviePicks.Api.Extensions;
+﻿namespace MoviePicks.Api.Startup;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;

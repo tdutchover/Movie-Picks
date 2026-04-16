@@ -1,22 +1,16 @@
-﻿namespace MoviePicks.Api.Extensions;
+﻿namespace MoviePicks.Api.Startup;
 
-using Microsoft.AspNetCore.Diagnostics;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System;
 using MoviePicks.Api.Models;
+using MoviePicks.Api.Routing;
 
 public static partial class WebApplicationExtensions
 {
-    private static readonly string DevExceptionHandlerEndpointPath = "/development-exception-handler";
-
     public static void ConfigureMiddleware(this WebApplication app)
     {
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
         {
             ConfigureDevelopmentMiddleware(app);
-            ConfigureTestingEndpoints(app);
         }
         else
         {
@@ -46,44 +40,13 @@ public static partial class WebApplicationExtensions
         }
 
         app.UseAuthorization();
-
-        app.MapControllers();
     }
 
     private static void ConfigureDevelopmentMiddleware(WebApplication app)
     {
         app.UseSwagger();
         app.UseSwaggerUI();
-        app.UseExceptionHandler(DevExceptionHandlerEndpointPath); // Routes exceptions to the minimal API endpoint
-        ConfigureExceptionHandlingEndpoint(app);
-    }
-
-    // This minimal API endpoint returns the prepared ProblemDetails response when an exception occurs.
-    // This endpoint is only used in development mode.
-    private static void ConfigureExceptionHandlingEndpoint(WebApplication app)
-    {
-        // Custom error handling for development mode with detailed information and logging
-        app.MapGet(DevExceptionHandlerEndpointPath, async (HttpContext httpContext) =>
-          {
-            var exceptionFeature = httpContext.Features.Get<IExceptionHandlerFeature>();
-            var exception = exceptionFeature?.Error;
-
-            // Retrieve a logger instance using the built-in ASP.NET Core logging
-            var logger = httpContext.RequestServices.GetRequiredService<ILogger<Program>>();
-            logger.LogError(exception, "Unhandled exception occurred in development.");
-
-            var problemDetails = new ProblemDetails
-                  {
-                    Title = "An error occurred",
-                    Status = StatusCodes.Status500InternalServerError,
-                    Detail = exception?.Message // Detailed error information for development
-                  };
-
-            return Results.Problem(
-                detail: problemDetails.Detail,
-                title: problemDetails.Title,
-                statusCode: problemDetails.Status);
-                });
+        app.UseExceptionHandler(ExceptionHandlingRoutes.DevelopmentException); // Routes exceptions to the minimal API endpoint
     }
 
     private static void ConfigureProductionMiddleware(WebApplication app)
@@ -95,12 +58,5 @@ public static partial class WebApplicationExtensions
         // path is specified. This ExceptionHandlerMiddleware uses registered service
         // IProblemDetailsService to provide the ProblemDetails response.
         app.UseExceptionHandler();
-    }
-
-    private static void ConfigureTestingEndpoints(WebApplication app)
-    {
-        // The following minimal API endpoints are used for testing and development only.
-        app.MapGet("/test-exception", (HttpContext context) => throw new Exception("Test exception"));
-        app.MapGet("/test-bad-status-code-handler/{statusCode}", (int statusCode) => Results.StatusCode(statusCode));
     }
 }
