@@ -2,6 +2,7 @@
 
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
+using Scalar.AspNetCore;
 using System;
 
 public static class EndpointRouteBuilderExtensions
@@ -13,6 +14,8 @@ public static class EndpointRouteBuilderExtensions
 
         if (app.Environment.IsDevelopment())
         {
+            MapOpenApiDocumentation(app);
+
             MapDevelopmentExceptionEndpoint(app);
             MapTestEndpoints(app);
         }
@@ -27,6 +30,21 @@ public static class EndpointRouteBuilderExtensions
     {
         // Add Aspire telemetry endpoints
         app.MapDefaultEndpoints();
+    }
+
+    private static void MapOpenApiDocumentation(WebApplication app)
+    {
+        // Generates the OpenAPI JSON document that describes the API's endpoints and schemas.
+        app.MapOpenApi();
+
+        // Displays the interactive user interface that allows developers to
+        // browse and test the API using the generated OpenApi document.
+        app.MapScalarApiReference(options =>
+        {
+            options.WithTitle("Movie Picks API")
+                   .WithTheme(ScalarTheme.DeepSpace) // Modern dark/orange theme
+                   .WithDefaultHttpClient(ScalarTarget.CSharp, ScalarClient.HttpClient);
+        });
     }
 
     // Development-only error handler used by UseExceptionHandler to return detailed error responses.

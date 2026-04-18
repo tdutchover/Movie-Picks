@@ -22,9 +22,8 @@ public static partial class ServiceCollectionExtensions
 
         services.AddControllers();
 
-        // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         services.AddEndpointsApiExplorer();
-        services.AddSwaggerGen();
+        services.AddOpenApi();
 
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<IMoviesService, MoviesService>();
