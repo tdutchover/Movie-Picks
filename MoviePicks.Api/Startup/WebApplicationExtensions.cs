@@ -2,6 +2,7 @@
 
 using MoviePicks.Api.Models;
 using MoviePicks.Api.Routing;
+using Scalar.AspNetCore;
 
 public static partial class WebApplicationExtensions
 {
@@ -44,8 +45,6 @@ public static partial class WebApplicationExtensions
 
     private static void ConfigureDevelopmentMiddleware(WebApplication app)
     {
-        app.UseSwagger();
-        app.UseSwaggerUI();
         app.UseExceptionHandler(ExceptionHandlingRoutes.DevelopmentException); // Routes exceptions to the minimal API endpoint
     }
 
