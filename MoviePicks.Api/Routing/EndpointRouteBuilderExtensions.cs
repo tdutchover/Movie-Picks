@@ -65,15 +65,26 @@ public static class EndpointRouteBuilderExtensions
         });
     }
 
-    // Theese endpoints are for testing and development only.
+    // These endpoints are for infrastructure verification and are only available in development.
     private static void MapTestEndpoints(WebApplication app)
     {
         app.MapGet("/test-exception", (HttpContext _) =>
         {
+            // Verified by the configured development exception handler or the 
+            // standard ExceptionHandlerMiddleware in production.
             throw new Exception("Test exception");
-            return Results.Problem(); // unreachable, but helps metadata
-        });
+        })
+        .WithName("TestException")
+        .WithSummary("Trigger a server-side exception")
+        .WithDescription("Verifies that the exception handling middleware correctly captures and formats unhandled crashes into Problem Details.")
+        .ProducesProblem(StatusCodes.Status500InternalServerError);
 
-        app.MapGet("/test-bad-status-code-handler/{statusCode}", (int statusCode) => Results.StatusCode(statusCode));
+        app.MapGet("/test-status-code/{statusCode}", (int statusCode) => Results.StatusCode(statusCode))
+        .WithName("TestStatusCode")
+        .WithSummary("Return any specified HTTP status code")
+        .WithDescription("A pass-through endpoint to verify how the UI and middleware (like UseStatusCodePages) respond to different HTTP status results.")
+        .Produces(StatusCodes.Status200OK)
+        .ProducesProblem(StatusCodes.Status400BadRequest)
+        .ProducesProblem(StatusCodes.Status500InternalServerError);
     }
 }
