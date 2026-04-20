@@ -262,3 +262,23 @@ async function searchMovies() {
         selectedMovieRenderer.switchToSearchMode();
     }
 }
+
+function debounce(func, delay) {
+    let timeoutId;
+
+    return function (...args) {
+        if (timeoutId) {
+            clearTimeout(timeoutId);
+        }
+
+        timeoutId = setTimeout(() => {
+            func.apply(this, args);
+        }, delay);
+    };
+}
+
+// Using a long 500ms delay to avoid chatty API calls while user is typing
+// because OMDB API has a very low free tier limit of 1000 calls per day.
+const delayTimeInMilliseconds = 500;
+const debouncedSearch = debounce(searchMovies, delayTimeInMilliseconds);
+movieSearchBox.addEventListener("input", debouncedSearch);
