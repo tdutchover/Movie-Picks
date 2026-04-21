@@ -11,9 +11,6 @@ public class MovieViewModel
     public MovieViewModel()
     {
         this.ImdbId = EmptyString;
-        this.Rating = 0;
-        this.ReviewHeading = EmptyString;
-        this.ReviewComments = EmptyString;
         this.Title = EmptyString;
         this.Year = EmptyString;
         this.Rated = EmptyString;
@@ -43,7 +40,7 @@ public class MovieViewModel
 
     [Range(1, 10)]
     [Display(Name = "Personal Rating")]
-    public int Rating { get; set; }
+    public int? Rating { get; set; }
 
     [Display(Name = "Review Heading")]
     [DataType(DataType.Text)]

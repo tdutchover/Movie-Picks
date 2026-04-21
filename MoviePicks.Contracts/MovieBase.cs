@@ -16,7 +16,7 @@ public class MovieBase : IIdentifiable
     // This will go into a separate Review class when multiple users are allowed because then a movie can have multiple reviews.
 
     [Display(Name = "Rating")]
-    public int Rating { get; set; }
+    public int? Rating { get; set; }
 
     [Display(Name = "Review Heading")]
     [DataType(DataType.Text)]

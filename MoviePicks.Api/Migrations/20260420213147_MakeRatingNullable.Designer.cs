@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MoviePicks.Api.Models;
 
@@ -10,9 +11,11 @@ using MoviePicks.Api.Models;
 namespace MoviePicks.Api.Migrations
 {
     [DbContext(typeof(DbMovieContext))]
-    partial class DbMovieContextModelSnapshot : ModelSnapshot
+    [Migration("20260420213147_MakeRatingNullable")]
+    partial class MakeRatingNullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
